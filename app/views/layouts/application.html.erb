@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html class='default' dir='ltr'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+    <title> Formal Language | <%= yield :page_subtitle %> </title>
+    <meta name='author' content='Schwannden, schwannden@gmail.com'>
+    <meta name='description' content='Formal Language Course Forum'>
+    <meta name='keywords' content='admin, template, wrapbootstrap, metro, modern, flat, responsive'>
+    <meta name='robots' content='index, follow'>
+    <meta name='viewport' content='width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <meta property="og:title" content="Formal Language Home" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://formal.schwannden.com/imgs/homepage/home_bg.jpg" />
+    <link rel='apple-touch-icon' sizes='57x57' href='/favicons/apple-touch-icon-57x57.png'>
+    <link rel='apple-touch-icon' sizes='114x114' href='/favicons/apple-touch-icon-114x114.png'>
+    <link rel='apple-touch-icon' sizes='72x72' href='/favicons/apple-touch-icon-72x72.png'>
+    <link rel='apple-touch-icon' sizes='144x144' href='/favicons/apple-touch-icon-144x144.png'>
+    <link rel='apple-touch-icon' sizes='60x60' href='/favicons/apple-touch-icon-60x60.png'>
+    <link rel='apple-touch-icon' sizes='120x120' href='/favicons/apple-touch-icon-120x120.png'>
+    <link rel='apple-touch-icon' sizes='76x76' href='/favicons/apple-touch-icon-76x76.png'>
+    <link rel='apple-touch-icon' sizes='152x152' href='/favicons/apple-touch-icon-152x152.png'>
+    <meta name='apple-mobile-web-app-title' content='Rubix'>
+    <link rel='icon' type='image/png' href='/favicons/favicon-196x196.png' sizes='196x196'>
+    <link rel='icon' type='image/png' href='/favicons/favicon-160x160.png' sizes='160x160'>
+    <link rel='icon' type='image/png' href='/favicons/favicon-96x96.png' sizes='96x96'>
+    <link rel='icon' type='image/png' href='/favicons/favicon-16x16.png' sizes='16x16'>
+    <link rel='icon' type='image/png' href='/favicons/favicon-32x32.png' sizes='32x32'>
+    <meta name='msapplication-TileColor' content='#E76049'>
+    <meta name='msapplication-TileImage' content='/mstile-144x144.png'>
+    <meta name='application-name' content='Rubix'>
+    <link media='screen' rel='stylesheet' type='text/css' href='/css/vendor/pace/pace.css' />
+    <link media='screen' rel='stylesheet' type='text/css' href='/css/vendor/perfect-scrollbar/perfect-scrollbar.css'>
+    <link media='screen' rel='stylesheet' type='text/css' href='/css/vendor/morris/morris.css'>
+    <style>
+        .modal-backdrop.in {
+            opacity: 0.5;
+            position: fixed;
+            top: 0; left: 0;
+            right: 0; bottom: 0;
+        }
+    </style>
+
+    <%= stylesheet_link_tag :application %>
+    <link media='screen' rel='stylesheet' type='text/css' href='/css/fonts/app/fonts.css'>
+    <%= javascript_include_tag :application %>
+    <%= csrf_meta_tags %>
+    <%= yield :head %>
+  </head>
+  <body class='fade-out' data-version='3.0.0'>
+    <div id='app-container'>
+      <%= yield %>
+    </div>
+    <script type='text/javascript' src='/js/common/uuid/uuid.js'></script>
+    <script type='text/javascript' src='/js/common/rubix-bootstrap/rubix-bootstrap.js'></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']]}});
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type='text/javascript' src='/js/common/rubix/rubix.js'></script>
+    <script type='text/javascript' src='/js/common/globals.js'></script>
+    <%= javascript_include_tag :admin %>
+  </body>
+</html>

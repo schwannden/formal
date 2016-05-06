@@ -1,0 +1,9 @@
+<% content_for :head do %>
+<script type="text/javascript">
+  var user = {
+    id: <%= current_user.id if current_user %> + 0,
+    email: "<%== escape_javascript current_user.email if current_user %>" + "",
+    name: "<%== escape_javascript current_user.name if current_user %>" + "",
+  };
+</script>
+<% end %>
