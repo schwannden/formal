@@ -18,8 +18,9 @@
 
 #ignore compiled assets
 public/assets
-.DS_Store
+app/assets/javascripts/admin.js
 
+.DS_Store
 node_modules
 *.swp
 .secret
