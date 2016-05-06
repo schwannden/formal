@@ -58,13 +58,16 @@ class Body extends React.Component {
   }
 
   errorNotification() {
-    Messenger().post({
-      id: 'error',
-      type: 'error',
-      hideAfter: 900,
-      message: UserStore.getError(),
-      showCloseButton: true
-    });
+    let errors = UserStore.getErrors();
+    for (let key in errors) { 
+      Messenger().post({
+        id: key,
+        type: 'error',
+        hideAfter: 10,
+        message: "ERROR: " + key + " " + errors[key],
+        showCloseButton: true
+      });
+    }
   }
 
   render() {

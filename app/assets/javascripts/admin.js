@@ -5242,10 +5242,9 @@
 	      return _user.status;
 	    }
 	  }, {
-	    key: 'getError',
-	    value: function getError() {
-	      if (_user.error.responseText === "") _user.error.responseText = "a temporary error has occured, please try later";
-	      return "ERROR: " + _user.error.responseText;
+	    key: 'getErrors',
+	    value: function getErrors() {
+	      if (_user.error.responseJSON != undefined) return _user.error.responseJSON.errors;else return { "": _user.error.responseText };
 	    }
 	  }]);
 
@@ -8892,13 +8891,16 @@
 	  }, {
 	    key: 'errorNotification',
 	    value: function errorNotification() {
-	      Messenger().post({
-	        id: 'error',
-	        type: 'error',
-	        hideAfter: 900,
-	        message: _storesUser_store2['default'].getError(),
-	        showCloseButton: true
-	      });
+	      var errors = _storesUser_store2['default'].getErrors();
+	      for (var key in errors) {
+	        Messenger().post({
+	          id: key,
+	          type: 'error',
+	          hideAfter: 10,
+	          message: "ERROR: " + key + " " + errors[key],
+	          showCloseButton: true
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -9344,13 +9346,16 @@
 	  }, {
 	    key: 'errorNotification',
 	    value: function errorNotification() {
-	      Messenger().post({
-	        id: 'error',
-	        type: 'error',
-	        hideAfter: 900,
-	        message: _storesUser_store2['default'].getError(),
-	        showCloseButton: true
-	      });
+	      var errors = _storesUser_store2['default'].getErrors();
+	      for (var key in errors) {
+	        Messenger().post({
+	          id: key,
+	          type: 'error',
+	          hideAfter: 10,
+	          message: "ERROR: " + key + " " + errors[key],
+	          showCloseButton: true
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
