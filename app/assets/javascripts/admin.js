@@ -7326,8 +7326,8 @@
 	            { onSubmit: this.createTweet.bind(this) },
 	            React.createElement(
 	              PanelBody,
-	              { style: { padding: 12.5 } },
-	              React.createElement(Textarea, { rows: '3', ref: 'message', placeholder: 'What\'s on your mind? (enclose LaTeX in $$, ex. $\\int_0^\\infty \\sum_{i=1}^m f_m(x) dx $)', style: { border: 'none' } })
+	              null,
+	              React.createElement(Textarea, { rows: '3', ref: 'message', placeholder: 'What\'s on your mind? (LaTeX and HTML supported, enclose LaTeX in $$', style: { border: 'none' } })
 	            ),
 	            React.createElement(
 	              PanelFooter,
@@ -8642,7 +8642,29 @@
 	                        React.createElement(
 	                          'td',
 	                          null,
-	                          user.email
+	                          ' ',
+	                          user.email,
+	                          ' '
+	                        )
+	                      ),
+	                      React.createElement(
+	                        'tr',
+	                        null,
+	                        React.createElement(
+	                          'td',
+	                          { style: { width: 300 } },
+	                          ' Profile Picture '
+	                        ),
+	                        React.createElement(
+	                          'td',
+	                          null,
+	                          ' Use ',
+	                          React.createElement(
+	                            'a',
+	                            { href: 'https://en.gravatar.com', target: '_blank' },
+	                            ' Gravatar '
+	                          ),
+	                          'to create your globally accessible profile picture! '
 	                        )
 	                      ),
 	                      React.createElement(
