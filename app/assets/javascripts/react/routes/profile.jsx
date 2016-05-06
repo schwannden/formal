@@ -139,9 +139,12 @@ var Body = React.createClass({
                         </tr>
                         <tr>
                           <td style={{width: 300}}> Email </td>
-                          <td>
-                             {user.email}
-                          </td>
+                          <td> {user.email} </td>
+                        </tr>
+                        <tr>
+                          <td style={{width: 300}}> Profile Picture </td>
+                          <td> Use <a href="https://en.gravatar.com" target="_blank"> Gravatar </a>
+                               to create your globally accessible profile picture! </td>
                         </tr>
                         <tr>
                           <td> User Name </td>

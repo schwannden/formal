@@ -21,8 +21,8 @@ export default class TweetBox extends React.Component {
       <Col sm={6} >
         <PanelContainer>
           <form onSubmit={this.createTweet.bind(this)}>
-            <PanelBody style={{padding: 12.5}}>
-              <Textarea rows='3' ref="message" placeholder="What's on your mind? (enclose LaTeX in $$, ex. &#36;\int_0^\infty \sum_{i=1}^m f_m(x) dx &#36;)" style={{border: 'none'}} />
+            <PanelBody>
+              <Textarea rows='3' ref="message" placeholder="What's on your mind? (LaTeX and HTML supported, enclose LaTeX in $$" style={{border: 'none'}} />
             </PanelBody>
             <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
               <Grid>
