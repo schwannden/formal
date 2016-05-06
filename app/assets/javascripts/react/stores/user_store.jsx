@@ -17,10 +17,11 @@ class UserEventEmitter extends AppEventEmiter {
     return _user.status;
   }
 
-  getError() {
-    if (_user.error.responseText === "") 
-      _user.error.responseText = "a temporary error has occured, please try later" 
-    return "ERROR: " + _user.error.responseText;
+  getErrors() {
+    if (_user.error.responseJSON != undefined)
+      return _user.error.responseJSON.errors;
+    else
+      return {"": _user.error.responseText};
   }
 }
 
