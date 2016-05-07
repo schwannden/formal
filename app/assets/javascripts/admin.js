@@ -7181,7 +7181,7 @@
 	      TweetStore.emitChange();
 	      break;
 	    case _action_type2['default'].RECEIVED_COMMENT:
-	      forum.comments.unshift(action.rawComment);
+	      forum.comments.push(action.rawComment);
 	      TweetStore.emitChange();
 	      break;
 	    case _action_type2['default'].DELETED_COMMENT:

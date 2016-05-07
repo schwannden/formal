@@ -3,7 +3,7 @@ class TweetsController < ApplicationController
     render json: {
       tweets: Tweet.includes(:user).order(created_at: :desc).all,
       likes: Like.order(:to_id).all,
-      comments: Comment.includes(:from).order(created_at: :desc).all
+      comments: Comment.includes(:from).order(created_at: :asc).all
     }
   end
 
