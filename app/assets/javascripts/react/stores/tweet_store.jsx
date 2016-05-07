@@ -80,7 +80,7 @@ AppDispatcher.register(action => {
       TweetStore.emitChange();
       break;
     case ActionType.RECEIVED_COMMENT:
-      forum.comments.unshift(action.rawComment);
+      forum.comments.push(action.rawComment);
       TweetStore.emitChange();
       break;
     case ActionType.DELETED_COMMENT:
