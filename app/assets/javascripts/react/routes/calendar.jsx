@@ -14,7 +14,7 @@ class Body extends React.Component {
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
       },
-      defaultDate: moment(Date.now()).format('YYYY-MM/DD'),
+      slotMinutes: 60,
       defaultView: "agendaWeek",
       editable: false,
       eventLimit: true, // allow "more" link when too many events
