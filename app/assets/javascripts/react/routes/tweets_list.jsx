@@ -5,15 +5,18 @@ import Tweet    from 'routes/tweet'
 
 export default class TweetsList extends React.Component {
   render () {
-    let tweets = this.props.tweets.map( (tweet, i) => {
-      tweet.float_direction = (i%2 == 1)? "left" : "right";
-      return (<Tweet {...tweet} />);
+    let tweets = [<Col sm={6}></Col>, <Col sm={6}></Col>];
+    tweets[0].props.children = this.props.tweets.map( (tweet, i) => {
+      return tweet.float_direction = (i%2 == 0)? (<Tweet {...tweet} />) : "";
+    });
+    tweets[1].props.children = this.props.tweets.map( (tweet, i) => {
+      return tweet.float_direction = (i%2 == 1)? (<Tweet {...tweet} />) : "";
     });
     return (
-      <Row>
+      <div>
         <TweetBox />
         {tweets}
-      </Row>
+      </div>
     );
   }
 }

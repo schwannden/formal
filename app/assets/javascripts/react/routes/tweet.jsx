@@ -45,7 +45,6 @@ export default class Tweet extends React.Component {
     let tweet = this.props;
     let comments = this.props.comments.map(comment => <Comment {...comment}/> );
     return (
-      <Col sm={6} style={{float: this.props.float_direction}}>
         <PanelContainer>
           <PanelBody style={{padding: 25, paddingTop: 12.5}}>
             <div className='inbox-avatar'>
@@ -89,7 +88,6 @@ export default class Tweet extends React.Component {
             </form>
           </PanelFooter>
         </PanelContainer>
-      </Col>
     )
   }
 }
