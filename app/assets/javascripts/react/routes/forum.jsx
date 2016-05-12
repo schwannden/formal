@@ -12,9 +12,15 @@ import Footer  from 'common/footer';
 class Body extends React.Component {
   constructor(props) {
     super(props);
-    this.state = TweetStore.getState();
+    this.state = this.getState();
     this._onChange = this._onChange.bind(this);
     TweetActions.getTweets();
+  }
+
+  getState() {
+    return {
+      tweets: TweetStore.getTweets(),
+    };
   }
 
   componentDidMount() {
@@ -23,14 +29,12 @@ class Body extends React.Component {
   }
 
   componentWillUnmount() {
-    TweetStore.removeChangeListener(this._onChange);
     $('html').removeClass('social');
+    TweetStore.removeChangeListener(this._onChange);
   }
 
   _onChange () {
-    this.setState(TweetStore.getState(), () => {
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-    });
+    this.setState(this.getState());
   }
 
   render() {
@@ -48,12 +52,8 @@ class Body extends React.Component {
 @SidebarMixin
 export default class extends React.Component {
   render() {
-    var classes = classNames({
-      'container-open': this.props.open
-    });
-
     return (
-      <Container id='container' className={classes}>
+      <Container>
         <Sidebar />
         <Header />
         <Body />

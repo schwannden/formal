@@ -27,6 +27,12 @@ export default {
       .error(error => console.log(error));
   },
   
+  getTweet(id) {
+    $.get("/tweet/" + id)
+      .success(data => ServerActions.receivedTweet())
+      .error(error => console.log(error));
+  },
+  
   createTweet(form_data) {
     $.post("/tweets", form_data)
       .success(data => ServerActions.receivedTweet(data))

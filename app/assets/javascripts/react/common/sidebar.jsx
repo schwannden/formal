@@ -41,9 +41,9 @@ class ApplicationSidebar extends React.Component {
               <div className='sidebar-header'> Session </div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-ikons-logout' onClick={this.handleSignout} name='Logout' href="/" />
-                  <SidebarNavItem glyph='icon-ikons-user' name='Profile' href={path_helper('/profile')} />
-                  <SidebarNavItem glyph='icon-ikons-lock' name='Lock Page' href={path_helper('/lock')} />
+                  <SidebarNavItem glyph='icon-fontello-logout' onClick={this.handleSignout} name='Logout' href="/" />
+                  <SidebarNavItem glyph='icon-fontello-user-2' name='Profile' href={path_helper('/profile')} />
+                  <SidebarNavItem glyph='icon-fontello-lock-filled' name='Lock Page' href={path_helper('/lock')} />
                 </SidebarNav>
               </div>
             </Col>

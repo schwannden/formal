@@ -1,55 +1,43 @@
 import classNames from 'classnames';
+
 import TweetActions from 'actions/tweet_actions'
+import TweetStore   from 'stores/tweet_store'
+import ActionType   from 'action_type'
+import Preview      from 'routes/preview'
 
 export default class TweetBox extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = this.getState();
+    this._onChange = this._onChange.bind(this);
     this.createTweet = this.createTweet.bind(this);
-    this.updatePreview = this.updatePreview.bind(this);
-    this.preview   = null;
-    this.buffer    = null;
-    this.timeout   = null;
-    this.mjRunning = false;
-    this.mjPending = false;
-    this.oldText   = null;
   }
 
-  swapBuffers() {
-    let buffer = this.preview, preview = this.buffer;
-    this.buffer = buffer; this.preview = preview;
-    buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
-    preview.style.position = ""; preview.style.visibility = "";
+  getState() {
+    let actionType = TweetStore.getActionType();
+    return {
+      actionType: actionType,
+    };
   }
 
-  updatePreview() {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-    this.timeout = setTimeout(this.updateCallback, this.delay);
+  componentWillMount() {
+    TweetStore.addChangeListener(this._onChange);
   }
 
-  createPreview() {
-    this.timeout = null;
-    if (this.mjPending) return;
-    var text = document.getElementById("MathInput").value;
-    if (text === this.oldtext) return;
-    if (this.mjRunning) {
-      this.mjPending = true;
-      MathJax.Hub.Queue(["createPreview",this]);
-    } else {
-      this.buffer.innerHTML = this.oldtext = text;
-      this.mjRunning = true;
-      MathJax.Hub.Queue(
-        ["Typeset",MathJax.Hub,this.buffer],
-        ["previewDone",this]
-      );
-    }
+  componentWillUnmount() {
+    TweetStore.removeChangeListener(this._onChange);
   }
 
-  previewDone() {
-    this.mjRunning = this.mjPending = false;
-    this.swapBuffers();
+  _onChange () {
+    this.setState(this.getState(), () => {
+      if(this.state.actionType == ActionType.RECEIVED_TWEET) {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        $("#TweetPreview").text("");
+        $("#PreviewBuffer").text("");
+        $("#TweetMessage").val("");
+      }
+    });
   }
 
   createTweet(event) {
@@ -61,16 +49,17 @@ export default class TweetBox extends React.Component {
         }
       };
       TweetActions.createTweet(form_data);
-      this.refs.message.value = '';
     }
   }
 
+
   componentDidMount() {
-    this.updateCallback = MathJax.Callback(["createPreview", this]);
-    this.updateCallback.autoReset = true;
-    this.preview = document.getElementById("MathPreview");
-    this.buffer = document.getElementById("MathBuffer");
-    $("#MathInput").on('keydown, keypress, keyup, input', this.updatePreview);
+    let previewOption = {
+      previewId: "TweetPreview",
+      bufferId:  "PreviewBuffer",
+      inputId:   "TweetMessage",
+    };
+    new Preview(previewOption);
   }
 
   render () {
@@ -85,20 +74,23 @@ export default class TweetBox extends React.Component {
                     <Row>
                       <Col xs={12} className='fg-white'>
                         <h3>What{"'"}s On Your Mind?</h3>
-                        <h6>LaTeX and HTML supported, enclose LaTeX in $$</h6>
+                        <h6>LaTeX and HTML supported, enclose LaTeX in $$
+                          <a href='https://en.wikibooks.org/wiki/LaTeX/Mathematics'
+                             target='_blank' className="reference-hint" > LaTeX Reference 
+                          </a>
+                        </h6>
                       </Col>
                     </Row>
                   </Grid>
                 </PanelHeader>
                 <PanelBody>
-                  <Textarea rows='3' ref="message" style={{border: 'none'}} id="MathInput" />
+                  <Textarea rows='6' ref="message" style={{border: 'none'}} id="TweetMessage" />
                 </PanelBody>
                 <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
                   <Grid>
                     <Row>
                       <Col xs={6} >
                         <a href='#' style={{border: 'none'}}><Icon glyph='icon-dripicons-camera icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
-                        <a href='https://en.wikibooks.org/wiki/LaTeX/Mathematics' target='_blank'style={{border: 'none'}}> Quick LaTeX Reference</a>
                       </Col>
                       <Col xs={6} className='text-right' collapseLeft collapseRight>
                         <Button type='submit' bsStyle='darkgreen45'>send</Button>
@@ -122,8 +114,8 @@ export default class TweetBox extends React.Component {
               </Grid>
             </PanelHeader>
             <PanelBody>
-              <div id="MathBuffer"> </div>
-              <div id="MathPreview"> </div>
+              <div id="PreviewBuffer"> </div>
+              <div id="TweetPreview"> </div>
             </PanelBody>
           </PanelContainer>
         </Col>

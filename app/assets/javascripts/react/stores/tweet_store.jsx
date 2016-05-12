@@ -3,17 +3,14 @@ import ActionType from 'action_type';
 import AppEventEmiter from 'stores/app_event_emitter';
 
 let forum = {
-  tweets:    [],
-  likes:     [],
-  comments:  [],
+  tweets:     [],
+  likes:      [],
+  comments:   [],
+  actionType: null,
+  tweet:      {id: null, message: ""},
 };
 
 class TweetEventEmitter extends AppEventEmiter {
-  getState() {
-    return {
-      tweets: TweetStore.getTweets(),
-    };
-  }
 
   countLikes(tweet) {
     let id = tweet.id;
@@ -43,10 +40,12 @@ class TweetEventEmitter extends AppEventEmiter {
 
   getTweets() {
     return forum.tweets.map(tweet => {
-      tweet.formattedDate = moment(tweet.created_at).fromNow();
+      tweet.key      = tweet.id;
       tweet.likes    = this.countLikes(tweet);
       tweet.like_id  = this.find_like(tweet);
       tweet.editable = tweet.user_id == user.id;
+      tweet.message  = tweet.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
+      tweet.formattedDate = moment(tweet.created_at).fromNow();
       tweet.comments = this.comments(tweet).map( comment => {
         comment.formattedDate = moment(comment.created_at).fromNow();
         return comment;
@@ -54,11 +53,22 @@ class TweetEventEmitter extends AppEventEmiter {
       return tweet;
     });
   }
+
+  getTweet() {
+    let tweet = forum.tweet;
+    tweet.message  = tweet.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    return tweet;
+  }
+
+  getActionType() {
+    return forum.actionType;
+  }
 }
 
 let TweetStore = new TweetEventEmitter;
 
 AppDispatcher.register(action => {
+  forum.actionType = action.actionType;
   switch(action.actionType) {
     case ActionType.RECEIVED_TWEETS:
       forum.tweets = action.data.tweets;

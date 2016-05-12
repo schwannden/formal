@@ -5,6 +5,10 @@ export default {
     API.getTweets();
   },
 
+  getTweet(id) {
+    API.getTweet(id);
+  },
+
   createTweet(form_data) {
     API.createTweet(form_data);
   },
