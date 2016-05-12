@@ -41,6 +41,10 @@ export default class Tweet extends React.Component {
     return (this.props.like_id == -1)? '#89949B' : '#2EB398';
   }
 
+  editClass() {
+    return (this.props.editable)? 'icon-fontello-pencil icon-1-and-quarter-x' : '';
+  }
+
   render () {
     let tweet = this.props;
     let comments = this.props.comments.map(comment => <Comment {...comment}/> );
@@ -53,7 +57,7 @@ export default class Tweet extends React.Component {
                 <div className='fg-darkgrayishblue75'>{this.props.author}</div>
               </div>
               <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
-                <div style={{position: 'relative', top: 0}}><Icon glyph='icon-fontello-anchor icon-1-and-quarter-x'/></div>
+                <div style={{position: 'relative', top: 0}}><Icon glyph={this.editClass()}/></div>
                 <div style={{position: 'relative', top: -10}}><small><strong>{this.props.formattedDate}</strong></small></div>
               </div>
             </div>

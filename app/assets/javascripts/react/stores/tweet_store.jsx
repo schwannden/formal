@@ -44,8 +44,9 @@ class TweetEventEmitter extends AppEventEmiter {
   getTweets() {
     return forum.tweets.map(tweet => {
       tweet.formattedDate = moment(tweet.created_at).fromNow();
-      tweet.likes = this.countLikes(tweet);
-      tweet.like_id = this.find_like(tweet);
+      tweet.likes    = this.countLikes(tweet);
+      tweet.like_id  = this.find_like(tweet);
+      tweet.editable = tweet.user_id == user.id;
       tweet.comments = this.comments(tweet).map( comment => {
         comment.formattedDate = moment(comment.created_at).fromNow();
         return comment;
