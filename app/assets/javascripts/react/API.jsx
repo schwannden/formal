@@ -21,21 +21,21 @@ export default {
       });
   },
 
-  getTweets() {
+  tweetIndex() {
     $.get("/tweets")
-      .success(data => ServerActions.receivedTweets(data))
+      .success(data => ServerActions.tweetIndex(data))
       .error(error => console.log(error));
   },
   
-  getTweet(id) {
-    $.get("/tweet/" + id)
-      .success(data => ServerActions.receivedTweet())
+  tweetEdit(id) {
+    $.get("/tweets/" + id)
+      .success(data => ServerActions.tweetEdit(data))
       .error(error => console.log(error));
   },
   
-  createTweet(form_data) {
+  tweetCreate(form_data) {
     $.post("/tweets", form_data)
-      .success(data => ServerActions.receivedTweet(data))
+      .success(data => ServerActions.tweetCreate(data))
       .error(error => console.log(error));
   },
 

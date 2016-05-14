@@ -3,6 +3,7 @@ import SidebarMixin from 'global/jsx/sidebar_component';
 
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
+import ActionType   from 'action_type'
 import TweetsList   from 'routes/tweets_list'
 
 import Header  from 'common/header';
@@ -14,12 +15,13 @@ class Body extends React.Component {
     super(props);
     this.state = this.getState();
     this._onChange = this._onChange.bind(this);
-    TweetActions.getTweets();
+    TweetActions.tweetIndex();
   }
 
   getState() {
     return {
       tweets: TweetStore.getTweets(),
+      actionType: TweetStore.getActionType(),
     };
   }
 
@@ -34,7 +36,18 @@ class Body extends React.Component {
   }
 
   _onChange () {
-    this.setState(this.getState());
+    this.setState(this.getState(), () => {
+      switch (this.state.actionType) {
+        case ActionType.TWEET_CREATE:
+          $("#TweetPreview").text("");
+          $("#PreviewBuffer").text("");
+          $("#TweetMessage").val("");
+        case ActionType.TWEET_INDEX:
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+          break;
+        default:
+      }
+    });
   }
 
   render() {

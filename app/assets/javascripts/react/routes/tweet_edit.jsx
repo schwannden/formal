@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import SidebarMixin from 'global/jsx/sidebar_component';
-import {Route, Router, State, Link} from 'react-router';
 
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
@@ -15,6 +14,7 @@ class Body extends React.Component {
     super(props);
     this.state = this.getState();
     this.updateTweet = this.updateTweet.bind(this);
+    this._onChange = this._onChange.bind(this);
   }
 
   componentDidMount() {
@@ -23,11 +23,13 @@ class Body extends React.Component {
       bufferId:  "PreviewBuffer",
       inputId:   "TweetMessage",
     };
-    TweetActions.getTweet(window.location.pathname.split('/')[3]);
+    TweetActions.tweetEdit(window.location.pathname.split('/')[3]);
+    TweetStore.addChangeListener(this._onChange);
     new Preview(previewOption);
   }
 
   componentWillUnmount() {
+    TweetStore.removeChangeListener(this._onChange);
   }
 
   updateTweet () {
@@ -35,10 +37,11 @@ class Body extends React.Component {
 
   getState () {
     let tweet = TweetStore.getTweet();
-    return {tweet: tweet};
+    return {message: tweet.message};
   }
   
   _onChange() {
+    this.setState(this.getState());
   }
 
   render() {
@@ -65,7 +68,8 @@ class Body extends React.Component {
                     </Grid>
                   </PanelHeader>
                   <PanelBody>
-                    <Textarea rows='6' ref="message" style={{border: 'none'}} id="TweetMessage" />
+                    <Textarea rows='6' ref="message" style={{border: 'none'}} id="TweetMessage"
+                              value={this.state.message} />
                   </PanelBody>
                   <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
                     <Grid>

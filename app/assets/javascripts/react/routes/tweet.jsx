@@ -8,7 +8,6 @@ export default class Tweet extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleEdit = this.handleEdit.bind(this);
     this.handleLike = this.handleLike.bind(this);
   }
 
@@ -48,12 +47,9 @@ export default class Tweet extends React.Component {
     return (this.props.like_id == -1)? '#89949B' : '#2EB398';
   }
 
-  handleEdit() {
-  }
-
   editDiv() {
     return (this.props.editable)? (
-      <Link to={"/admin/tweets/" + this.props.id + "/edit"} style={{border: 'none'}} onClick={this.handleEdit}>
+      <Link to={"/admin/tweets/" + this.props.id + "/edit"} style={{border: 'none'}}>
         <Icon glyph='icon-fontello-pencil icon-1-and-quarter-x'/>
       </Link>
     ) : '';

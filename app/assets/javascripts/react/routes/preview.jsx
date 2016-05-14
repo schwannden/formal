@@ -4,6 +4,7 @@ export default class Preview {
     this.preview        = document.getElementById(options.previewId);
     this.buffer         = document.getElementById(options.bufferId);
     this.timeout        = null;
+    this.delay          = 1000;
     this.mjRunning      = false;
     this.mjPending      = false;
     this.oldText        = null;
@@ -40,8 +41,8 @@ export default class Preview {
       this.buffer.innerHTML = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
       this.mjRunning = true;
       MathJax.Hub.Queue(
-        ["Typeset",MathJax.Hub,this.buffer],
-        ["previewDone",this]
+        ["Typeset", MathJax.Hub, this.buffer],
+        ["previewDone", this]
       );
     }
   }

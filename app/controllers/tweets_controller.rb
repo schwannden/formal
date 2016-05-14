@@ -1,4 +1,6 @@
 class TweetsController < ApplicationController
+  before_action :set_tweet, only: [:show]
+
   def index
     render json: {
       tweets: Tweet.includes(:user).order(created_at: :desc).all,
@@ -16,9 +18,21 @@ class TweetsController < ApplicationController
     end
   end
 
+  def show
+    if @tweet.user == current_user
+      render json: @tweet
+    else
+      render json: { :errors => "you are not authorized to edit this tweet" }
+    end
+  end
+
   private
 
   def tweet_params
     params.require(:tweet).permit(:message)
+  end
+
+  def set_tweet
+    @tweet = Tweet.find params[:id] 
   end
 end

@@ -6,8 +6,8 @@ let forum = {
   tweets:     [],
   likes:      [],
   comments:   [],
-  actionType: null,
   tweet:      {id: null, message: ""},
+  actionType: null,
 };
 
 class TweetEventEmitter extends AppEventEmiter {
@@ -70,14 +70,18 @@ let TweetStore = new TweetEventEmitter;
 AppDispatcher.register(action => {
   forum.actionType = action.actionType;
   switch(action.actionType) {
-    case ActionType.RECEIVED_TWEETS:
+    case ActionType.TWEET_INDEX:
       forum.tweets = action.data.tweets;
       forum.likes = action.data.likes;
       forum.comments = action.data.comments;
       TweetStore.emitChange();
       break;
-    case ActionType.RECEIVED_TWEET:
+    case ActionType.TWEET_CREATE:
       forum.tweets.unshift(action.rawTweet);
+      TweetStore.emitChange();
+      break;
+    case ActionType.TWEET_EDIT:
+      forum.tweet = action.rawTweet;
       TweetStore.emitChange();
       break;
     case ActionType.RECEIVED_LIKE:

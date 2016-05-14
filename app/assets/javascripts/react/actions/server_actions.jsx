@@ -28,16 +28,23 @@ export default {
     })
   },
 
-  receivedTweets(data) {
+  tweetIndex(data) {
     AppDispatcher.dispatch({
-      actionType: ActionType.RECEIVED_TWEETS,
+      actionType: ActionType.TWEET_INDEX,
       data: data,
     })
   },
 
-  receivedTweet(data) {
+  tweetCreate(data) {
     AppDispatcher.dispatch({
-      actionType: ActionType.RECEIVED_TWEET,
+      actionType: ActionType.TWEET_CREATE,
+      rawTweet: data
+    })
+  },
+
+  tweetEdit(data) {
+    AppDispatcher.dispatch({
+      actionType: ActionType.TWEET_EDIT,
       rawTweet: data
     })
   },

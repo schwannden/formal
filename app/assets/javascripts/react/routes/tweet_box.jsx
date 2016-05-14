@@ -30,14 +30,6 @@ export default class TweetBox extends React.Component {
   }
 
   _onChange () {
-    this.setState(this.getState(), () => {
-      if(this.state.actionType == ActionType.RECEIVED_TWEET) {
-        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-        $("#TweetPreview").text("");
-        $("#PreviewBuffer").text("");
-        $("#TweetMessage").val("");
-      }
-    });
   }
 
   createTweet(event) {
@@ -48,7 +40,7 @@ export default class TweetBox extends React.Component {
           message: this.refs.message.value
         }
       };
-      TweetActions.createTweet(form_data);
+      TweetActions.tweetCreate(form_data);
     }
   }
 

@@ -1,16 +1,16 @@
 import API from 'API'
 
 export default {
-  getTweets() {
-    API.getTweets();
+  tweetIndex() {
+    API.tweetIndex();
   },
 
-  getTweet(id) {
-    API.getTweet(id);
+  tweetEdit(id) {
+    API.tweetEdit(id);
   },
 
-  createTweet(form_data) {
-    API.createTweet(form_data);
+  tweetCreate(form_data) {
+    API.tweetCreate(form_data);
   },
 
   createLike(tweet_id) {
