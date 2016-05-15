@@ -3,6 +3,7 @@ import SidebarMixin from 'global/jsx/sidebar_component';
 
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
+import ActionType   from 'action_type'
 import TweetsList   from 'routes/tweets_list'
 
 import Header  from 'common/header';
@@ -12,9 +13,16 @@ import Footer  from 'common/footer';
 class Body extends React.Component {
   constructor(props) {
     super(props);
-    this.state = TweetStore.getState();
+    this.state = this.getState();
     this._onChange = this._onChange.bind(this);
-    TweetActions.getTweets();
+    TweetActions.tweetIndex();
+  }
+
+  getState() {
+    return {
+      tweets: TweetStore.getTweets(),
+      actionType: TweetStore.getActionType(),
+    };
   }
 
   componentDidMount() {
@@ -23,13 +31,22 @@ class Body extends React.Component {
   }
 
   componentWillUnmount() {
-    TweetStore.removeChangeListener(this._onChange);
     $('html').removeClass('social');
+    TweetStore.removeChangeListener(this._onChange);
   }
 
   _onChange () {
-    this.setState(TweetStore.getState(), () => {
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    this.setState(this.getState(), () => {
+      switch (this.state.actionType) {
+        case ActionType.TWEET_CREATE:
+          $("#TweetPreview").text("");
+          $("#PreviewBuffer").text("");
+          $("#TweetMessage").val("");
+        case ActionType.TWEET_INDEX:
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+          break;
+        default:
+      }
     });
   }
 
@@ -48,12 +65,8 @@ class Body extends React.Component {
 @SidebarMixin
 export default class extends React.Component {
   render() {
-    var classes = classNames({
-      'container-open': this.props.open
-    });
-
     return (
-      <Container id='container' className={classes}>
+      <Container>
         <Sidebar />
         <Header />
         <Body />

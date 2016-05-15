@@ -1,19 +1,18 @@
+import { State, Navigation } from 'react-router';
+
 import AppDispatcher from 'dispatcher';
 import ActionType from 'action_type';
 import AppEventEmiter from 'stores/app_event_emitter';
 
 let forum = {
-  tweets:    [],
-  likes:     [],
-  comments:  [],
+  tweets:     [],
+  likes:      [],
+  comments:   [],
+  tweet:      {id: null, message: ""},
+  actionType: null,
 };
 
 class TweetEventEmitter extends AppEventEmiter {
-  getState() {
-    return {
-      tweets: TweetStore.getTweets(),
-    };
-  }
 
   countLikes(tweet) {
     let id = tweet.id;
@@ -43,9 +42,12 @@ class TweetEventEmitter extends AppEventEmiter {
 
   getTweets() {
     return forum.tweets.map(tweet => {
+      tweet.key      = tweet.id;
+      tweet.likes    = this.countLikes(tweet);
+      tweet.like_id  = this.find_like(tweet);
+      tweet.editable = tweet.user_id == user.id;
+      tweet.message  = tweet.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
       tweet.formattedDate = moment(tweet.created_at).fromNow();
-      tweet.likes = this.countLikes(tweet);
-      tweet.like_id = this.find_like(tweet);
       tweet.comments = this.comments(tweet).map( comment => {
         comment.formattedDate = moment(comment.created_at).fromNow();
         return comment;
@@ -53,20 +55,37 @@ class TweetEventEmitter extends AppEventEmiter {
       return tweet;
     });
   }
+
+  getTweet() {
+    let tweet = forum.tweet;
+    return tweet;
+  }
+
+  getActionType() {
+    return forum.actionType;
+  }
 }
 
 let TweetStore = new TweetEventEmitter;
 
 AppDispatcher.register(action => {
+  forum.actionType = action.actionType;
   switch(action.actionType) {
-    case ActionType.RECEIVED_TWEETS:
+    case ActionType.TWEET_INDEX:
       forum.tweets = action.data.tweets;
       forum.likes = action.data.likes;
       forum.comments = action.data.comments;
       TweetStore.emitChange();
       break;
-    case ActionType.RECEIVED_TWEET:
+    case ActionType.TWEET_CREATE:
       forum.tweets.unshift(action.rawTweet);
+      TweetStore.emitChange();
+      break;
+    case ActionType.TWEET_EDIT:
+      forum.tweet = action.rawTweet;
+      TweetStore.emitChange();
+      break;
+    case ActionType.TWEET_UPDATE:
       TweetStore.emitChange();
       break;
     case ActionType.RECEIVED_LIKE:

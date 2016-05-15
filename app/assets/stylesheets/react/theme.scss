@@ -269,3 +269,15 @@
     background-image: url(/imgs/mobile_logo.png);
   }
 }
+
+.reference-hint {
+  border: none;
+  color: white;
+  float: right;
+}
+
+@media (max-width: 1240px){
+  .reference-hint {
+    display: none;
+  }
+}

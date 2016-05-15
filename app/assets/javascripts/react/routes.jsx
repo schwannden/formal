@@ -14,6 +14,8 @@ import Login from 'routes/login';
 import Signup from 'routes/signup';
 import Lock from 'routes/lock';
 
+import TweetEdit from 'routes/tweet_edit'
+
 export default (withHistory, onUpdate) => {
   const history = withHistory?
                   (Modernizr.history ?
@@ -32,6 +34,8 @@ export default (withHistory, onUpdate) => {
       <Route path={'/signup'} component={Signup} />
       <Route path={path_helper('/profile')} component={Profile} />
       <Route path={path_helper('/lock')} component={Lock} />
+
+      <Route path='/admin/tweets/:id/edit' component={TweetEdit} />
 
     </Router>
   );

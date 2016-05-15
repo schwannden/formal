@@ -21,18 +21,30 @@ export default {
       });
   },
 
-  getTweets() {
+  tweetIndex() {
     $.get("/tweets")
-      .success(data => ServerActions.receivedTweets(data))
+      .success(data => ServerActions.tweetIndex(data))
       .error(error => console.log(error));
   },
   
-  createTweet(form_data) {
+  tweetCreate(form_data) {
     $.post("/tweets", form_data)
-      .success(data => ServerActions.receivedTweet(data))
+      .success(data => ServerActions.tweetCreate(data))
       .error(error => console.log(error));
   },
 
+  tweetEdit(id) {
+    $.get("/tweets/" + id)
+      .success(data => ServerActions.tweetEdit(data))
+      .error(error => console.log(error));
+  },
+  
+  tweetUpdate(id, form_data) {
+    $.post("/tweets/" + id, form_data)
+      .success(data => ServerActions.tweetUpdate(data))
+      .error(error => console.log(error));
+  },
+  
   createLike(tweet_id) {
     let params = {"like": {"to_id": tweet_id}};
     $.post("/likes", params)

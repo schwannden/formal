@@ -1,0 +1,161 @@
+import classNames from 'classnames';
+import SidebarMixin from 'global/jsx/sidebar_component';
+
+import TweetActions from 'actions/tweet_actions'
+import TweetStore   from 'stores/tweet_store'
+import ActionType   from 'action_type'
+import Preview      from 'routes/preview'
+
+import Header  from 'common/header';
+import Sidebar from 'common/sidebar';
+import Footer  from 'common/footer';
+
+class Body extends React.Component {
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = this.getState();
+    this.updateTweet = this.updateTweet.bind(this);
+    this._onChange = this._onChange.bind(this);
+    this.id = window.location.pathname.split('/')[3];
+  }
+
+  componentDidMount() {
+    let previewOption = {
+      previewId: "TweetPreview",
+      bufferId:  "PreviewBuffer",
+      inputId:   "TweetMessage",
+    };
+    TweetActions.tweetEdit(this.id);
+    TweetStore.addChangeListener(this._onChange);
+    this.preview = new Preview(previewOption);
+  }
+
+  componentWillUnmount() {
+    TweetStore.removeChangeListener(this._onChange);
+  }
+
+  updateTweet (e) {
+    e.preventDefault();
+    if(this.refs.message.value != '') {
+      let form_data = {
+        tweet: {
+          message: this.refs.message.value,
+        },
+        _method: "patch",
+      };
+      TweetActions.tweetUpdate(this.id, form_data);
+    }
+  }
+
+  getState () {
+    return {
+      message: TweetStore.getTweet().message,
+      actionType: TweetStore.getActionType()
+    };
+  }
+  
+  _onChange() {
+    this.setState(this.getState(), () => {
+      switch (this.state.actionType) {
+        case ActionType.TWEET_EDIT:
+          $('#TweetMessage').val(this.state.message);
+          this.preview.updatePreview();
+          break;
+        case ActionType.TWEET_UPDATE:
+          this.context.router.transitionTo('/admin/forum');
+          break;
+        default:
+      }
+    });
+  }
+
+  render() {
+    return (
+      <Container id='body' className='social'>
+        <Grid>
+        <Row>
+          <Col sm={6} >
+            <PanelContainer controlStyles='bg-blue fg-white'>
+              <form onSubmit={this.updateTweet}>
+                <Panel>
+                  <PanelHeader className='bg-blue'>
+                    <Grid>
+                      <Row>
+                        <Col xs={12} className='fg-white'>
+                          <h3>Update Tweet</h3>
+                          <h6>LaTeX and HTML supported, enclose LaTeX in $$
+                            <a href='https://en.wikibooks.org/wiki/LaTeX/Mathematics'
+                               target='_blank' className="reference-hint" > LaTeX Reference 
+                            </a>
+                          </h6>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  </PanelHeader>
+                  <PanelBody>
+                    <Textarea rows='6' ref="message"
+                      style={{border: 'none'}} id="TweetMessage"/>
+                  </PanelBody>
+                  <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
+                    <Grid>
+                      <Row>
+                        <Col xs={6} >
+                          <a href='#' style={{border: 'none'}}><Icon glyph='icon-dripicons-camera icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
+                        </Col>
+                        <Col xs={6} className='text-right' collapseLeft collapseRight>
+                          <Button type='submit' bsStyle='darkgreen45'>send</Button>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  </PanelFooter>
+                </Panel>
+              </form>
+            </PanelContainer>
+          </Col>
+          <Col sm={6}>
+            <PanelContainer>
+              <PanelHeader className='bg-blue'>
+                <Grid>
+                  <Row>
+                    <Col xs={12} className='fg-white'>
+                      <h3>Preview</h3>
+                    </Col>
+                  </Row>
+                </Grid>
+              </PanelHeader>
+              <PanelBody>
+                <div id="PreviewBuffer"> </div>
+                <div id="TweetPreview"> </div>
+              </PanelBody>
+            </PanelContainer>
+          </Col>
+        </Row>
+        </Grid>
+      </Container>
+    );
+  }
+}
+
+@SidebarMixin
+export default class extends React.Component {
+  render() {
+    var classes = classNames({
+      'container-open': this.props.open
+    });
+
+    return (
+      <Container id='container' className={classes}>
+        <Sidebar />
+        <Header />
+        <Body />
+        <Footer />
+      </Container>
+    );
+  }
+}
+

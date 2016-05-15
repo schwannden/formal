@@ -1,9 +1,15 @@
 import classNames from 'classnames';
+import { Link }   from 'react-router';
 
 import TweetActions from 'actions/tweet_actions';
 import Comment      from 'routes/comment';
 
 export default class Tweet extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleLike = this.handleLike.bind(this);
+  }
 
   createMarkup(message) {
     return {__html: message};
@@ -41,11 +47,18 @@ export default class Tweet extends React.Component {
     return (this.props.like_id == -1)? '#89949B' : '#2EB398';
   }
 
+  editDiv() {
+    return (this.props.editable)? (
+      <Link to={"/admin/tweets/" + this.props.id + "/edit"} style={{border: 'none'}}>
+        <Icon glyph='icon-fontello-pencil icon-1-and-quarter-x'/>
+      </Link>
+    ) : '';
+  }
+
   render () {
     let tweet = this.props;
     let comments = this.props.comments.map(comment => <Comment {...comment}/> );
     return (
-      <Col sm={6} style={{float: this.props.float_direction}}>
         <PanelContainer>
           <PanelBody style={{padding: 25, paddingTop: 12.5}}>
             <div className='inbox-avatar'>
@@ -53,9 +66,9 @@ export default class Tweet extends React.Component {
               <div className='inbox-avatar-name'>
                 <div className='fg-darkgrayishblue75'>{this.props.author}</div>
               </div>
-              <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
-                <div style={{position: 'relative', top: 0}}><Icon glyph='icon-fontello-anchor icon-1-and-quarter-x'/></div>
-                <div style={{position: 'relative', top: -10}}><small><strong>{this.props.formattedDate}</strong></small></div>
+              <div className='inbox-date fg-text text-right'>
+                {this.editDiv()}
+                <div style={{position: 'relative', top: -10}} className='hidden-sm hidden-xs'><small><strong>{this.props.formattedDate}</strong></small></div>
               </div>
             </div>
             <div>
@@ -68,7 +81,7 @@ export default class Tweet extends React.Component {
               <Row>
                 <Col xs={6} collapseLeft collapseRight>
                   <a href='#' style={{border: 'none', marginRight: 25, color: this.likeColor()}}
-                     onClick={this.handleLike.bind(this)}>
+                     onClick={this.handleLike}>
                     <Icon glyph='icon-dripicons-thumbs-up icon-1-and-quarter-x' />
                     <span style={{position: 'relative', top: -2, left: 3}}>Like</span>
                   </a>
@@ -89,7 +102,6 @@ export default class Tweet extends React.Component {
             </form>
           </PanelFooter>
         </PanelContainer>
-      </Col>
     )
   }
 }

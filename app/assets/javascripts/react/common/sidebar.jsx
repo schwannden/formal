@@ -26,9 +26,9 @@ class ApplicationSidebar extends React.Component {
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem glyph='icon-fontello-gauge' name='Quiz' href={path_helper('/quiz')} />
-                  <SidebarNavItem glyph='icon-feather-share' name='Forum' href={path_helper('/forum')} />
+                  <SidebarNavItem glyph='icon-fontello-chat' name='Forum' href={path_helper('/forum')} />
                   <SidebarNavItem href={path_helper('/history')} glyph='icon-fontello-back-in-time' name='History of Computer' />
-                  <SidebarNavItem glyph='icon-ikons-calendar' name='Calendar' href={path_helper('/calendar')} />
+                  <SidebarNavItem glyph='icon-fontello-calendar' name='Calendar' href={path_helper('/calendar')} />
                 </SidebarNav>
               </div>
             </Col>
@@ -41,9 +41,9 @@ class ApplicationSidebar extends React.Component {
               <div className='sidebar-header'> Session </div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-ikons-logout' onClick={this.handleSignout} name='Logout' href="/" />
-                  <SidebarNavItem glyph='icon-ikons-user' name='Profile' href={path_helper('/profile')} />
-                  <SidebarNavItem glyph='icon-ikons-lock' name='Lock Page' href={path_helper('/lock')} />
+                  <SidebarNavItem glyph='icon-fontello-logout' onClick={this.handleSignout} name='Logout' href="/" />
+                  <SidebarNavItem glyph='icon-fontello-user-2' name='Profile' href={path_helper('/profile')} />
+                  <SidebarNavItem glyph='icon-fontello-lock-filled' name='Lock Page' href={path_helper('/lock')} />
                 </SidebarNav>
               </div>
             </Col>
