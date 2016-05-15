@@ -5,12 +5,16 @@ export default {
     API.tweetIndex();
   },
 
+  tweetCreate(form_data) {
+    API.tweetCreate(form_data);
+  },
+
   tweetEdit(id) {
     API.tweetEdit(id);
   },
 
-  tweetCreate(form_data) {
-    API.tweetCreate(form_data);
+  tweetUpdate(id, form_data) {
+    API.tweetUpdate(id, form_data);
   },
 
   createLike(tweet_id) {

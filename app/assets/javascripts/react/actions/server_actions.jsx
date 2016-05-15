@@ -49,6 +49,13 @@ export default {
     })
   },
 
+  tweetUpdate(data) {
+    AppDispatcher.dispatch({
+      actionType: ActionType.TWEET_UPDATE,
+      rawTweet: data
+    })
+  },
+
   receivedLike(data) {
     AppDispatcher.dispatch({
       actionType: ActionType.RECEIVED_LIKE,

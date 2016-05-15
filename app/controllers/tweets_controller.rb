@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: [:show]
+  before_action :set_tweet, only: [:show, :update]
 
   def index
     render json: {
@@ -21,6 +21,18 @@ class TweetsController < ApplicationController
   def show
     if @tweet.user == current_user
       render json: @tweet
+    else
+      render json: { :errors => "you are not authorized to edit this tweet" }
+    end
+  end
+
+  def update
+    if @tweet.user == current_user
+      if @tweet.update tweet_params
+        render json: @tweet
+      else
+        render json: { :errors => @tweet.errors.full_messages }
+      end
     else
       render json: { :errors => "you are not authorized to edit this tweet" }
     end

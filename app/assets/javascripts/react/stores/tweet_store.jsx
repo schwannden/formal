@@ -1,3 +1,5 @@
+import { State, Navigation } from 'react-router';
+
 import AppDispatcher from 'dispatcher';
 import ActionType from 'action_type';
 import AppEventEmiter from 'stores/app_event_emitter';
@@ -56,7 +58,6 @@ class TweetEventEmitter extends AppEventEmiter {
 
   getTweet() {
     let tweet = forum.tweet;
-    tweet.message  = tweet.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
     return tweet;
   }
 
@@ -82,6 +83,9 @@ AppDispatcher.register(action => {
       break;
     case ActionType.TWEET_EDIT:
       forum.tweet = action.rawTweet;
+      TweetStore.emitChange();
+      break;
+    case ActionType.TWEET_UPDATE:
       TweetStore.emitChange();
       break;
     case ActionType.RECEIVED_LIKE:

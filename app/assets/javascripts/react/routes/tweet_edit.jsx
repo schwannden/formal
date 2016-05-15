@@ -3,6 +3,7 @@ import SidebarMixin from 'global/jsx/sidebar_component';
 
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
+import ActionType   from 'action_type'
 import Preview      from 'routes/preview'
 
 import Header  from 'common/header';
@@ -10,11 +11,17 @@ import Sidebar from 'common/sidebar';
 import Footer  from 'common/footer';
 
 class Body extends React.Component {
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = this.getState();
     this.updateTweet = this.updateTweet.bind(this);
     this._onChange = this._onChange.bind(this);
+    this.id = window.location.pathname.split('/')[3];
   }
 
   componentDidMount() {
@@ -23,25 +30,48 @@ class Body extends React.Component {
       bufferId:  "PreviewBuffer",
       inputId:   "TweetMessage",
     };
-    TweetActions.tweetEdit(window.location.pathname.split('/')[3]);
+    TweetActions.tweetEdit(this.id);
     TweetStore.addChangeListener(this._onChange);
-    new Preview(previewOption);
+    this.preview = new Preview(previewOption);
   }
 
   componentWillUnmount() {
     TweetStore.removeChangeListener(this._onChange);
   }
 
-  updateTweet () {
+  updateTweet (e) {
+    e.preventDefault();
+    if(this.refs.message.value != '') {
+      let form_data = {
+        tweet: {
+          message: this.refs.message.value,
+        },
+        _method: "patch",
+      };
+      TweetActions.tweetUpdate(this.id, form_data);
+    }
   }
 
   getState () {
-    let tweet = TweetStore.getTweet();
-    return {message: tweet.message};
+    return {
+      message: TweetStore.getTweet().message,
+      actionType: TweetStore.getActionType()
+    };
   }
   
   _onChange() {
-    this.setState(this.getState());
+    this.setState(this.getState(), () => {
+      switch (this.state.actionType) {
+        case ActionType.TWEET_EDIT:
+          $('#TweetMessage').val(this.state.message);
+          this.preview.updatePreview();
+          break;
+        case ActionType.TWEET_UPDATE:
+          this.context.router.transitionTo('/admin/forum');
+          break;
+        default:
+      }
+    });
   }
 
   render() {
@@ -68,8 +98,8 @@ class Body extends React.Component {
                     </Grid>
                   </PanelHeader>
                   <PanelBody>
-                    <Textarea rows='6' ref="message" style={{border: 'none'}} id="TweetMessage"
-                              value={this.state.message} />
+                    <Textarea rows='6' ref="message"
+                      style={{border: 'none'}} id="TweetMessage"/>
                   </PanelBody>
                   <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
                     <Grid>

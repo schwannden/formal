@@ -6,8 +6,9 @@ export default {
   TWEET_INDEX:       5,
   TWEET_CREATE:      6,
   TWEET_EDIT:        7,
-  RECEIVED_LIKE:     8,
-  DELETED_LIKE:      9,
-  RECEIVED_COMMENT:  10,
-  DELETED_COMMENT:   11,
+  TWEET_UPDATE:      8,
+  RECEIVED_LIKE:     9,
+  DELETED_LIKE:      10,
+  RECEIVED_COMMENT:  11,
+  DELETED_COMMENT:   12,
 };
