@@ -66,9 +66,9 @@ export default class Tweet extends React.Component {
               <div className='inbox-avatar-name'>
                 <div className='fg-darkgrayishblue75'>{this.props.author}</div>
               </div>
-              <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
+              <div className='inbox-date fg-text text-right'>
                 {this.editDiv()}
-                <div style={{position: 'relative', top: -10}}><small><strong>{this.props.formattedDate}</strong></small></div>
+                <div style={{position: 'relative', top: -10}} className='hidden-sm hidden-xs'><small><strong>{this.props.formattedDate}</strong></small></div>
               </div>
             </div>
             <div>
