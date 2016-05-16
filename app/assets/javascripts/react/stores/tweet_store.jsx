@@ -88,21 +88,21 @@ AppDispatcher.register(action => {
     case ActionType.TWEET_UPDATE:
       TweetStore.emitChange();
       break;
-    case ActionType.RECEIVED_LIKE:
+    case ActionType.LIKE_CREATE:
       forum.likes.unshift(action.rawLike);
       TweetStore.emitChange();
       break;
-    case ActionType.DELETED_LIKE:
+    case ActionType.LIKE_DESTROY:
       forum.likes = forum.likes.filter(like => {
         return like.id != action.deletedLike.id;
       });
       TweetStore.emitChange();
       break;
-    case ActionType.RECEIVED_COMMENT:
+    case ActionType.COMMENT_CREATE:
       forum.comments.push(action.rawComment);
       TweetStore.emitChange();
       break;
-    case ActionType.DELETED_COMMENT:
+    case ActionType.COMMENT_DESTROY:
       forum.comments = forum.comments.filter(comment => {
         return comment.id != action.deletedComment.id;
       });

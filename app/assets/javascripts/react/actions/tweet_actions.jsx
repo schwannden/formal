@@ -17,20 +17,20 @@ export default {
     API.tweetUpdate(id, form_data);
   },
 
-  createLike(tweet_id) {
-    API.createLike(tweet_id);
+  likeCreate(tweet_id) {
+    API.likeCreate(tweet_id);
   },
 
-  deleteLike(like_id) {
-    API.deleteLike(like_id);
+  likeDestroy(tweet_id, like_id) {
+    API.likeDestroy(tweet_id, like_id);
   },
 
-  createComment(tweet_id) {
-    API.createComment(tweet_id);
+  commentCreate(tweet_id, form_data) {
+    API.commentCreate(tweet_id, form_data);
   },
 
-  deleteComment(comment_id) {
-    API.deleteComment(comment_id);
+  commentDestroy(tweet_id, comment_id) {
+    API.commentDestroy(tweet_id, comment_id);
   },
 
 }

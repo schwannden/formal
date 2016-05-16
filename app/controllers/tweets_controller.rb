@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: [:show, :update]
+  before_action :set_tweet, only: [:edit, :update]
 
   def index
     render json: {
@@ -10,7 +10,7 @@ class TweetsController < ApplicationController
   end
 
   def create
-    @tweet = Tweet.new tweet_params.merge ({user: current_user})
+    @tweet = Tweet.new tweet_params
     if @tweet.save
       render json: @tweet
     else
@@ -18,7 +18,7 @@ class TweetsController < ApplicationController
     end
   end
 
-  def show
+  def edit
     if @tweet.user == current_user
       render json: @tweet
     else
@@ -41,7 +41,8 @@ class TweetsController < ApplicationController
   private
 
   def tweet_params
-    params.require(:tweet).permit(:message)
+    params[:tweet][:user_id] = current_user.id
+    params.require(:tweet).permit(:message, :user_id)
   end
 
   def set_tweet

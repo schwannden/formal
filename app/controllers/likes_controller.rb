@@ -1,10 +1,12 @@
 class LikesController < ApplicationController
+  before_action :set_tweet,   only: [:create]
+
   def index
     render json: Like.all
   end
 
   def create
-    @like = Like.new like_params.merge ({from: current_user})
+    @like = Like.new like_params
     if @like.save
       render json: @like
     else
@@ -24,6 +26,11 @@ class LikesController < ApplicationController
   private
 
   def like_params
-    params.require(:like).permit(:to_id)
+    {from_id: current_user.id, to_id: @tweet.id}
   end
+
+  def set_tweet
+    @tweet = Tweet.find params[:tweet_id]
+  end
+
 end

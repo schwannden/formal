@@ -18,9 +18,9 @@ export default class Tweet extends React.Component {
   handleLike(e) {
     e.preventDefault();
     if (this.props.like_id != -1)
-      TweetActions.deleteLike(this.props.like_id);
+      TweetActions.likeDestroy(this.props.id, this.props.like_id);
     else
-      TweetActions.createLike(this.props.id);
+      TweetActions.likeCreate(this.props.id);
   }
 
   createComment(e) {
@@ -28,11 +28,10 @@ export default class Tweet extends React.Component {
     if (this.refs.message.value != '') {
       let form_data = {
         "comment": {
-          "to_id": this.props.id,
           "message": this.refs.message.value,
         }
       };
-      TweetActions.createComment(form_data);
+      TweetActions.commentCreate(this.props.id, form_data);
       this.refs.message.value = ''; 
     }
   }
