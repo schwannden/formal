@@ -14,7 +14,7 @@ import Login from 'routes/login';
 import Signup from 'routes/signup';
 import Lock from 'routes/lock';
 
-import TweetEdit from 'routes/tweet_edit'
+import EditBox from 'routes/edit_box'
 
 export default (withHistory, onUpdate) => {
   const history = withHistory?
@@ -35,7 +35,8 @@ export default (withHistory, onUpdate) => {
       <Route path={path_helper('/profile')} component={Profile} />
       <Route path={path_helper('/lock')} component={Lock} />
 
-      <Route path='/admin/tweets/:id/edit' component={TweetEdit} />
+      <Route path='/admin/tweets/:id/edit' component={EditBox} />
+      <Route path='/admin/tweets/:tweet_id/comments/:id/edit' component={EditBox} />
 
     </Router>
   );

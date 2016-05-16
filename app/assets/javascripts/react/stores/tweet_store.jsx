@@ -8,7 +8,7 @@ let forum = {
   tweets:     [],
   likes:      [],
   comments:   [],
-  tweet:      {id: null, message: ""},
+  message:    "",
   actionType: null,
 };
 
@@ -50,15 +50,15 @@ class TweetEventEmitter extends AppEventEmiter {
       tweet.formattedDate = moment(tweet.created_at).fromNow();
       tweet.comments = this.comments(tweet).map( comment => {
         comment.formattedDate = moment(comment.created_at).fromNow();
+        comment.editable = comment.from_id == user.id;
         return comment;
       });
       return tweet;
     });
   }
 
-  getTweet() {
-    let tweet = forum.tweet;
-    return tweet;
+  getMessage() {
+    return forum.message;
   }
 
   getActionType() {
@@ -82,27 +82,34 @@ AppDispatcher.register(action => {
       TweetStore.emitChange();
       break;
     case ActionType.TWEET_EDIT:
-      forum.tweet = action.rawTweet;
+      forum.message = action.rawTweet.message;
       TweetStore.emitChange();
       break;
     case ActionType.TWEET_UPDATE:
       TweetStore.emitChange();
       break;
-    case ActionType.RECEIVED_LIKE:
+    case ActionType.LIKE_CREATE:
       forum.likes.unshift(action.rawLike);
       TweetStore.emitChange();
       break;
-    case ActionType.DELETED_LIKE:
+    case ActionType.LIKE_DESTROY:
       forum.likes = forum.likes.filter(like => {
         return like.id != action.deletedLike.id;
       });
       TweetStore.emitChange();
       break;
-    case ActionType.RECEIVED_COMMENT:
+    case ActionType.COMMENT_CREATE:
       forum.comments.push(action.rawComment);
       TweetStore.emitChange();
       break;
-    case ActionType.DELETED_COMMENT:
+    case ActionType.COMMENT_EDIT:
+      forum.message = action.rawComment.message;
+      TweetStore.emitChange();
+      break;
+    case ActionType.COMMENT_UPDATE:
+      TweetStore.emitChange();
+      break;
+    case ActionType.COMMENT_DESTROY:
       forum.comments = forum.comments.filter(comment => {
         return comment.id != action.deletedComment.id;
       });

@@ -56,30 +56,44 @@ export default {
     })
   },
 
-  receivedLike(data) {
+  likeCreate(data) {
     AppDispatcher.dispatch({
-      actionType: ActionType.RECEIVED_LIKE,
+      actionType: ActionType.LIKE_CREATE,
       rawLike: data
     })
   },
 
-  deletedLike(data) {
+  likeDestroy(data) {
     AppDispatcher.dispatch({
-      actionType: ActionType.DELETED_LIKE,
+      actionType: ActionType.LIKE_DESTROY,
       deletedLike: data
     })
   },
 
-  receivedComment(data) {
+  commentCreate(data) {
     AppDispatcher.dispatch({
-      actionType: ActionType.RECEIVED_COMMENT,
+      actionType: ActionType.COMMENT_CREATE,
       rawComment: data
     })
   },
 
-  deletedComment(data) {
+  commentEdit(data) {
     AppDispatcher.dispatch({
-      actionType: ActionType.DELETED_COMMENT,
+      actionType: ActionType.COMMENT_EDIT,
+      rawComment: data
+    })
+  },
+
+  commentUpdate(data) {
+    AppDispatcher.dispatch({
+      actionType: ActionType.COMMENT_UPDATE,
+      rawComment: data
+    })
+  },
+
+  commentDestroy(data) {
+    AppDispatcher.dispatch({
+      actionType: ActionType.COMMENT_DESTROY,
       deletedComment: data
     })
   },

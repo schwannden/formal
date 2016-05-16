@@ -34,7 +34,7 @@ export default {
   },
 
   tweetEdit(id) {
-    $.get("/tweets/" + id)
+    $.get("/tweets/"+id+"/edit")
       .success(data => ServerActions.tweetEdit(data))
       .error(error => console.log(error));
   },
@@ -45,28 +45,39 @@ export default {
       .error(error => console.log(error));
   },
   
-  createLike(tweet_id) {
-    let params = {"like": {"to_id": tweet_id}};
-    $.post("/likes", params)
-      .success(data => ServerActions.receivedLike(data))
+  likeCreate(tweet_id) {
+    $.post("/tweets/" + tweet_id + "/likes")
+      .success(data => ServerActions.likeCreate(data))
       .error(error => console.log(error));
   },
 
-  deleteLike(like_id) {
-    $.post("/likes/" + like_id, {_method: "delete"})
-      .success(data => ServerActions.deletedLike(data))
+  likeDestroy(tweet_id, like_id) {
+    $.post("/tweets/" + tweet_id + "/likes/" + like_id, {_method: "delete"})
+      .success(data => ServerActions.likeDestroy(data))
       .error(error => console.log(error));
   },
 
-  createComment(form_data) {
-    $.post("/comments", form_data)
-      .success(data => ServerActions.receivedComment(data))
+  commentCreate(tweet_id, form_data) {
+    $.post("/tweets/" + tweet_id + "/comments", form_data)
+      .success(data => ServerActions.commentCreate(data))
       .error(error => console.log(error));
   },
 
-  deleteComment(comment_id) {
-    $.post("/comments/" + comment_id, {_method: "delete"})
-      .success(data => ServerActions.deletedComment(data))
+  commentEdit(tweet_id, id) {
+    $.get("/tweets/" + tweet_id + "/comments/" + id + "/edit")
+      .success(data => ServerActions.commentEdit(data))
+      .error(error => console.log(error));
+  },
+  
+  commentUpdate(tweet_id, id, form_data) {
+    $.post("/tweets/" + tweet_id + "/comments/" + id, form_data)
+      .success(data => ServerActions.commentUpdate(data))
+      .error(error => console.log(error));
+  },
+  
+  commentDestroy(tweet_id, comment_id) {
+    $.post("/tweets/" + tweet_id + "/comments/" + comment_id, {_method: "delete"})
+      .success(data => ServerActions.commentDestroy(data))
       .error(error => console.log(error));
   },
 

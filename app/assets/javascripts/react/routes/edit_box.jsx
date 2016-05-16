@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import SidebarMixin from 'global/jsx/sidebar_component';
+import { Link, State, Route }   from 'react-router';
 
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
@@ -19,27 +20,45 @@ class Body extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getState();
-    this.updateTweet = this.updateTweet.bind(this);
     this._onChange = this._onChange.bind(this);
-    this.id = window.location.pathname.split('/')[3];
   }
 
   componentDidMount() {
     let previewOption = {
-      previewId: "TweetPreview",
+      previewId: "MessagePreview",
       bufferId:  "PreviewBuffer",
-      inputId:   "TweetMessage",
+      inputId:   "MessageBox",
     };
-    TweetActions.tweetEdit(this.id);
-    TweetStore.addChangeListener(this._onChange);
     this.preview = new Preview(previewOption);
+    this.router  = this.context.router;
+    this.params  = this.context.router.state.params;
+    this.getDefaultValue();
+    TweetStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount() {
     TweetStore.removeChangeListener(this._onChange);
   }
 
-  updateTweet (e) {
+  getDefaultValue() {
+    switch(this.getTarget()) {
+      case "comment":
+        TweetActions.commentEdit(this.params.tweet_id, this.params.id);
+        this.handleUpdate = this.updateComment.bind(this);
+        break;
+      case "tweet":
+        TweetActions.tweetEdit(this.params.id);
+        this.handleUpdate = this.updateTweet.bind(this);
+        break;
+      default:
+    }
+  }
+
+  getTarget() {
+    return window.location.pathname.match('/comments')? "comment" : "tweet";
+  }
+
+  updateTweet(e) {
     e.preventDefault();
     if(this.refs.message.value != '') {
       let form_data = {
@@ -48,13 +67,26 @@ class Body extends React.Component {
         },
         _method: "patch",
       };
-      TweetActions.tweetUpdate(this.id, form_data);
+      TweetActions.tweetUpdate(this.params.id, form_data);
+    }
+  }
+
+  updateComment(e) {
+    e.preventDefault();
+    if(this.refs.message.value != '') {
+      let form_data = {
+        comment: {
+          message: this.refs.message.value,
+        },
+        _method: "patch",
+      };
+      TweetActions.commentUpdate(this.params.tweet_id, this.params.id, form_data);
     }
   }
 
   getState () {
     return {
-      message: TweetStore.getTweet().message,
+      message: TweetStore.getMessage(),
       actionType: TweetStore.getActionType()
     };
   }
@@ -63,11 +95,13 @@ class Body extends React.Component {
     this.setState(this.getState(), () => {
       switch (this.state.actionType) {
         case ActionType.TWEET_EDIT:
-          $('#TweetMessage').val(this.state.message);
+        case ActionType.COMMENT_EDIT:
+          $('#MessageBox').val(this.state.message);
           this.preview.updatePreview();
           break;
         case ActionType.TWEET_UPDATE:
-          this.context.router.transitionTo('/admin/forum');
+        case ActionType.COMMENT_UPDATE:
+          this.router.transitionTo('/admin/forum');
           break;
         default:
       }
@@ -81,7 +115,7 @@ class Body extends React.Component {
         <Row>
           <Col sm={6} >
             <PanelContainer controlStyles='bg-blue fg-white'>
-              <form onSubmit={this.updateTweet}>
+              <form onSubmit={this.handleUpdate}>
                 <Panel>
                   <PanelHeader className='bg-blue'>
                     <Grid>
@@ -99,7 +133,7 @@ class Body extends React.Component {
                   </PanelHeader>
                   <PanelBody>
                     <Textarea rows='6' ref="message"
-                      style={{border: 'none'}} id="TweetMessage"/>
+                      style={{border: 'none'}} id="MessageBox"/>
                   </PanelBody>
                   <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
                     <Grid>
@@ -130,7 +164,7 @@ class Body extends React.Component {
               </PanelHeader>
               <PanelBody>
                 <div id="PreviewBuffer"> </div>
-                <div id="TweetPreview"> </div>
+                <div id="MessagePreview"> </div>
               </PanelBody>
             </PanelContainer>
           </Col>

@@ -281,3 +281,13 @@
     display: none;
   }
 }
+
+.comment-author {
+  margin-left: 5px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.comment-message {
+  word-wrap: break-word;
+}

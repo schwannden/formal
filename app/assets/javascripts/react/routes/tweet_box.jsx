@@ -10,7 +10,6 @@ export default class TweetBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getState();
-    this._onChange = this._onChange.bind(this);
     this.createTweet = this.createTweet.bind(this);
   }
 
@@ -19,17 +18,6 @@ export default class TweetBox extends React.Component {
     return {
       actionType: actionType,
     };
-  }
-
-  componentWillMount() {
-    TweetStore.addChangeListener(this._onChange);
-  }
-
-  componentWillUnmount() {
-    TweetStore.removeChangeListener(this._onChange);
-  }
-
-  _onChange () {
   }
 
   createTweet(event) {
