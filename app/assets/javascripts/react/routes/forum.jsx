@@ -65,8 +65,12 @@ class Body extends React.Component {
 @SidebarMixin
 export default class extends React.Component {
   render() {
+    var classes = classNames({
+      'container-open': this.props.open
+    });
+
     return (
-      <Container>
+      <Container id='container' className={classes}>
         <Sidebar />
         <Header />
         <Body />
