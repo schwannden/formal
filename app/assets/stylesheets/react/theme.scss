@@ -291,3 +291,9 @@
 .comment-message {
   word-wrap: break-word;
 }
+
+@media (max-width: 621px){
+  .fc-scroller {
+    height: 100% !important;
+  }
+}
