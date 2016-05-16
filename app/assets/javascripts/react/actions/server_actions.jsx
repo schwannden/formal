@@ -77,6 +77,20 @@ export default {
     })
   },
 
+  commentEdit(data) {
+    AppDispatcher.dispatch({
+      actionType: ActionType.COMMENT_EDIT,
+      rawComment: data
+    })
+  },
+
+  commentUpdate(data) {
+    AppDispatcher.dispatch({
+      actionType: ActionType.COMMENT_UPDATE,
+      rawComment: data
+    })
+  },
+
   commentDestroy(data) {
     AppDispatcher.dispatch({
       actionType: ActionType.COMMENT_DESTROY,

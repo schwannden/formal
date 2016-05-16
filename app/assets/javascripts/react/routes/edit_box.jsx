@@ -42,11 +42,11 @@ class Body extends React.Component {
 
   getDefaultValue() {
     switch(this.getTarget()) {
-      case "comments":
-        TweetActions.commentEdit(this.params.id);
+      case "comment":
+        TweetActions.commentEdit(this.params.tweet_id, this.params.id);
         this.handleUpdate = this.updateComment.bind(this);
         break;
-      case "tweets":
+      case "tweet":
         TweetActions.tweetEdit(this.params.id);
         this.handleUpdate = this.updateTweet.bind(this);
         break;
@@ -55,7 +55,7 @@ class Body extends React.Component {
   }
 
   getTarget() {
-    return window.location.pathname.split('/')[2];
+    return window.location.pathname.match('/comments')? "comment" : "tweet";
   }
 
   updateTweet(e) {
@@ -75,18 +75,18 @@ class Body extends React.Component {
     e.preventDefault();
     if(this.refs.message.value != '') {
       let form_data = {
-        tweet: {
+        comment: {
           message: this.refs.message.value,
         },
         _method: "patch",
       };
-      TweetActions.commentUpdate(this.params.to_id, this.params.id, form_data);
+      TweetActions.commentUpdate(this.params.tweet_id, this.params.id, form_data);
     }
   }
 
   getState () {
     return {
-      message: TweetStore.getTweet().message,
+      message: TweetStore.getMessage(),
       actionType: TweetStore.getActionType()
     };
   }
@@ -95,10 +95,12 @@ class Body extends React.Component {
     this.setState(this.getState(), () => {
       switch (this.state.actionType) {
         case ActionType.TWEET_EDIT:
+        case ActionType.COMMENT_EDIT:
           $('#MessageBox').val(this.state.message);
           this.preview.updatePreview();
           break;
         case ActionType.TWEET_UPDATE:
+        case ActionType.COMMENT_UPDATE:
           this.router.transitionTo('/admin/forum');
           break;
         default:

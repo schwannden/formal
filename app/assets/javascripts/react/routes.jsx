@@ -36,7 +36,7 @@ export default (withHistory, onUpdate) => {
       <Route path={path_helper('/lock')} component={Lock} />
 
       <Route path='/admin/tweets/:id/edit' component={EditBox} />
-      <Route path='/admin/comment/:id/edit' component={EditBox} />
+      <Route path='/admin/tweets/:tweet_id/comments/:id/edit' component={EditBox} />
 
     </Router>
   );

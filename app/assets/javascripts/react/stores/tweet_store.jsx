@@ -8,7 +8,7 @@ let forum = {
   tweets:     [],
   likes:      [],
   comments:   [],
-  tweet:      {id: null, message: ""},
+  message:    "",
   actionType: null,
 };
 
@@ -57,9 +57,8 @@ class TweetEventEmitter extends AppEventEmiter {
     });
   }
 
-  getTweet() {
-    let tweet = forum.tweet;
-    return tweet;
+  getMessage() {
+    return forum.message;
   }
 
   getActionType() {
@@ -83,7 +82,7 @@ AppDispatcher.register(action => {
       TweetStore.emitChange();
       break;
     case ActionType.TWEET_EDIT:
-      forum.tweet = action.rawTweet;
+      forum.message = action.rawTweet.message;
       TweetStore.emitChange();
       break;
     case ActionType.TWEET_UPDATE:
@@ -101,6 +100,13 @@ AppDispatcher.register(action => {
       break;
     case ActionType.COMMENT_CREATE:
       forum.comments.push(action.rawComment);
+      TweetStore.emitChange();
+      break;
+    case ActionType.COMMENT_EDIT:
+      forum.message = action.rawComment.message;
+      TweetStore.emitChange();
+      break;
+    case ActionType.COMMENT_UPDATE:
       TweetStore.emitChange();
       break;
     case ActionType.COMMENT_DESTROY:

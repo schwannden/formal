@@ -29,6 +29,14 @@ export default {
     API.commentCreate(tweet_id, form_data);
   },
 
+  commentEdit(tweet_id, comment_id) {
+    API.commentEdit(tweet_id, comment_id);
+  },
+
+  commentUpdate(tweet_id, comment_id, form_data) {
+    API.commentUpdate(tweet_id, comment_id, form_data);
+  },
+
   commentDestroy(tweet_id, comment_id) {
     API.commentDestroy(tweet_id, comment_id);
   },

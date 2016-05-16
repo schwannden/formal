@@ -10,10 +10,6 @@ class Comment < ActiveRecord::Base
     from.name
   end
 
-  def message
-    simple_format super
-  end
-
   def key
     self.id
   end

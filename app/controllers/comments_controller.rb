@@ -1,9 +1,9 @@
 class CommentsController < ApplicationController
-  before_action :set_tweet,   only: [:create]
+  before_action :set_tweet,   only: [:create, :update]
   before_action :set_comment, only: [:edit, :update]
 
   def index
-    render json: Comment.includes(:user).order(created_at: :desc).all
+    render json: Comment.includes(:from).order(created_at: :desc).all
   end
 
   def create
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    if @tweet.user == current_user
+    if @comment.from == current_user
       render json: @comment
     else
       render json: { :errors => "you are not authorized to edit this comment" }
@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if @comment.user == current_user
+    if @comment.from == current_user
       if @comment.update comment_params
         render json: @comment
       else
@@ -57,6 +57,6 @@ class CommentsController < ApplicationController
   end
 
   def set_comment
-    @tweet = Comment.find params[:id]
+    @comment = Comment.find params[:id]
   end
 end

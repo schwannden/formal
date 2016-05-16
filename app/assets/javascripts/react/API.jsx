@@ -63,6 +63,18 @@ export default {
       .error(error => console.log(error));
   },
 
+  commentEdit(tweet_id, id) {
+    $.get("/tweets/" + tweet_id + "/comments/" + id + "/edit")
+      .success(data => ServerActions.commentEdit(data))
+      .error(error => console.log(error));
+  },
+  
+  commentUpdate(tweet_id, id, form_data) {
+    $.post("/tweets/" + tweet_id + "/comments/" + id, form_data)
+      .success(data => ServerActions.commentUpdate(data))
+      .error(error => console.log(error));
+  },
+  
   commentDestroy(tweet_id, comment_id) {
     $.post("/tweets/" + tweet_id + "/comments/" + comment_id, {_method: "delete"})
       .success(data => ServerActions.commentDestroy(data))

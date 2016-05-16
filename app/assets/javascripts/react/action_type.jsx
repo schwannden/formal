@@ -10,5 +10,7 @@ export default {
   LIKE_CREATE:       9,
   LIKE_DESTROY:      10,
   COMMENT_CREATE:    11,
-  COMMENT_DESTROY:   12,
+  COMMENT_EDIT:      12,
+  COMMENT_UPDATE:    13,
+  COMMENT_DESTROY:   14,
 };
