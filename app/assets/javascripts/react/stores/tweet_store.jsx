@@ -50,6 +50,7 @@ class TweetEventEmitter extends AppEventEmiter {
       tweet.formattedDate = moment(tweet.created_at).fromNow();
       tweet.comments = this.comments(tweet).map( comment => {
         comment.formattedDate = moment(comment.created_at).fromNow();
+        comment.editable = comment.from_id == user.id;
         return comment;
       });
       return tweet;
