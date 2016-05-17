@@ -1968,7 +1968,10 @@ Rubix.prototype.move_tooltip_y = function(dy, yx, points) {
             _y = formatterX(new Date(points[name].x));
         } else {
             if(points[name].invert) {
+              if (_y == undefined)
                 _y = formatterX(this.x.invert(points[name].x));
+              else
+                _y = formatterX(this.x.invert(points[name].x)) - _y;
             } else {
                 _y = formatterX(points[name].x);
             }
@@ -1983,8 +1986,6 @@ Rubix.prototype.move_tooltip_y = function(dy, yx, points) {
     }
 
     html = html.slice(0, html.length-4);
-
-    console.log(html);
 
     this.tooltip.html(html);
     } catch(e) {

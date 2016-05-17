@@ -26,6 +26,7 @@ class ApplicationSidebar extends React.Component {
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem glyph='icon-fontello-gauge' name='Quiz' href={path_helper('/quiz')} />
+                  <SidebarNavItem glyph='icon-fontello-chart-bar' name='Stat' href={path_helper('/stat')} />
                   <SidebarNavItem glyph='icon-fontello-chat' name='Forum' href={path_helper('/forum')} />
                   <SidebarNavItem href={path_helper('/history')} glyph='icon-fontello-back-in-time' name='History of Computer' />
                   <SidebarNavItem glyph='icon-fontello-calendar' name='Calendar' href={path_helper('/calendar')} />

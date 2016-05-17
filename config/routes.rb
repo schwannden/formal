@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   resources :tweets do
     resources :comments
     resources :likes

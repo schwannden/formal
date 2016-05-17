@@ -8,6 +8,12 @@ import Footer from 'common/footer';
 class Body extends React.Component {
 
   componentDidMount() {
+    $.get("/events")
+      .success(events => this.setupCalendar(events))
+      .error(error => console.log(error));
+  }
+
+  setupCalendar(events) {
     $('#calendar').fullCalendar({
       header: {
         left: 'prev,next today',
@@ -18,19 +24,11 @@ class Body extends React.Component {
       defaultView: "agendaWeek",
       editable: false,
       eventLimit: true, // allow "more" link when too many events
-      events: [
-        {
-          title: '大學部 - 正規語言概論 - 期中考',
-          start: '2016-5/10 10:10',
-          end: '2016-5/10 12:00'
-        },
-        {
-          title: '研究所 - 正規語言與計算理論 - 期中考',
-          start: '2016-5/12 10:10',
-          end: '2016-5/12 12:00'
-        },
-      ]
-    });
+      events: events.map(event => {
+        event.start = (new Date(0)).setUTCSeconds(event.start);
+        event.end   = (new Date(0)).setUTCSeconds(event.end);
+        return event;
+      })});
   }
 
   render() {

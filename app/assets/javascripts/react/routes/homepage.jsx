@@ -52,15 +52,14 @@ export default React.createClass({
       <Container id='homepage-container'>
         <Button bsStyle='deepred' id='demo-btn' onClick={this.handleLogin}>登入或註冊</Button>
         <div>
-          <Hero className='text-center hidden-xs' style={{height: 475, backgroundImage: 'url(/imgs/homepage/home_bg.jpg)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden'}}>
+          <Hero className='text-center hidden-xs' style={{height: 475, backgroundImage: 'url(/imgs/homepage/home_bg.png)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden'}}>
           </Hero>
-          <Hero className='text-center visible-xs' style={{height: 270, backgroundImage: 'url(/imgs/homepage/home_bg.jpg)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden'}}>
+          <Hero className='text-center visible-xs' style={{height: 270, backgroundImage: 'url(/imgs/homepage/home_bg.png)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden'}}>
           </Hero>
         </div>
         <Hero>
           <HeroHeader>
-            <span>{"恭喜你走到了這一步"}</span></HeroHeader>
-          <HeroHeader2>{"期中考快到囉～"}<sup><small><BLabel className='bg-deepred fg-white'>Chapter 3 ~ Chapter 5.2</BLabel></small></sup></HeroHeader2>
+            <span>Entscheidungsproblem</span></HeroHeader>
           <Grid>
             <Row>
               <Col sm={7} collapseLeft collapseRight>
@@ -73,10 +72,10 @@ export default React.createClass({
               </Col>
               <Col sm={5} collapseLeft collapseRight>
                 <div className='hidden-xs text-right'>
-                  <img src='/imgs/homepage/reactcode.png' />
+                  <img height='400' src='/imgs/homepage/face.png' />
                 </div>
                 <div className='visible-xs text-center'>
-                  <img width='250' src='/imgs/homepage/reactcode.png' />
+                  <img width='250' src='/imgs/homepage/face.png' />
                 </div>
               </Col>
             </Row>
@@ -84,12 +83,15 @@ export default React.createClass({
         </Hero>
         <Hero style={{position: 'relative', zIndex: 2}}>
           <HeroHeader>
-            <span>{"一些線上資源"}</span>
+            <span>使用網站資源</span>
           </HeroHeader>
-          <HeroHeader2>{"除了考古題系統之外.... 課本是不錯的resource.... 可是如果你不喜歡看書...."}</HeroHeader2>
           <div className='text-center' style={{marginTop: 25, marginBottom: 25}}>
-            <iframe src="https://www.youtube.com/embed/3x8mSr8ZPGQ" frameborder="0" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/DILF8usqp7M?list=PLlO--9bCCRJNpSad8b4-21a72wZSF0fhD" frameborder="0" allowfullscreen></iframe>
+            <div className='hidden-xs'>
+              <img src='/imgs/homepage/features.png' />
+            </div>
+            <div className='visible-xs'>
+              <img width='400' src='/imgs/homepage/features.png' />
+            </div>
           </div>
         </Hero>
         <Hero className='subtle-bottom-shadow'>
