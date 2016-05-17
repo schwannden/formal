@@ -28,7 +28,13 @@ class Body extends React.Component {
         event.start = (new Date(0)).setUTCSeconds(event.start);
         event.end   = (new Date(0)).setUTCSeconds(event.end);
         return event;
-      })});
+      }),
+      eventRender: function(event, element, view) {
+        $(element).tooltip({
+          title: event.title + "<br><br>" + event.description + "<br></br> 地點：" + event.location
+        });
+      }
+    });
   }
 
   render() {
