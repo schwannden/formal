@@ -1,6 +1,14 @@
 import ServerActions from 'actions/server_actions'
 
 export default {
+  get_user() {
+    $.get('/current_user')
+      .success(user => {
+        ServerActions.get_user(user);
+      })
+      .error(error => console.log(error));
+  },
+
   user_signup (form_data) {
     $.post('/users', form_data)
       .success(response => {

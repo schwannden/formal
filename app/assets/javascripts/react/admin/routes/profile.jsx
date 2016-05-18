@@ -1,6 +1,9 @@
 import classNames   from 'classnames';
 import SidebarMixin from 'global/jsx/sidebar_component';
 
+import UserStore   from 'stores/user_store';
+import UserActions from 'actions/user_actions';
+
 import Header  from 'common/header';
 import Sidebar from 'common/sidebar';
 import Footer  from 'common/footer';
@@ -12,14 +15,18 @@ var Body = React.createClass({
       return 'counter-' + ++Body.counter;
     }
   },
+
   getInitialState: function() {
     return {
-      refresh: Body.getCounter() // used to redraw the component
+      refresh: Body.getCounter(),
+      user: UserStore.getUser(),
     };
   },
+
   onSubmit: function() {
     console.log('submit');
   },
+
   renderEditable: function() {
     $('.xeditable').editable({
       disabled: true,
@@ -43,11 +50,6 @@ var Body = React.createClass({
     });
   },
 
-  handleModeChange: function(mode, e) {
-    e.stopPropagation();
-    this.setState({mode: mode, refresh: Body.getCounter()}, this.renderEditable);
-  },
-
   handleSave: function() {
     $('#user .editable').editable('submit', { 
        url: '/users', 
@@ -55,6 +57,7 @@ var Body = React.createClass({
            dataType: 'json' //assuming json response
        },           
        success: function(data, config) {
+         UserActions.get_user();
          $('#user .editable').editable('toggleDisabled');
          $('.save-btn').hide();
          $('.edit-btn').show();
@@ -91,13 +94,34 @@ var Body = React.createClass({
   toggleEditable: function() {
     $('#user .editable').editable('toggleDisabled');
   },
+
   componentDidMount: function() {
     this.renderEditable();
+    UserStore.addChangeListener(this._onChange);
+    UserActions.get_user();
     Messenger.options = {
       theme: 'flat'
     };
     $('.save-btn').hide();
   },
+
+  componentWillUnmount: function() {
+    UserStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState(this.getState(), () => {
+      this.renderEditable();
+    });
+  },
+
+  getState: function() {
+    return {
+      refresh: Body.getCounter(),
+      user: UserStore.getUser(),
+    };
+  },
+
   render: function() {
     return (
       <Container id='body'>
@@ -139,7 +163,7 @@ var Body = React.createClass({
                         </tr>
                         <tr>
                           <td style={{width: 300}}> Email </td>
-                          <td> {user.email} </td>
+                          <td> {this.state.user.email} </td>
                         </tr>
                         <tr>
                           <td style={{width: 300}}> Profile Picture </td>
@@ -150,7 +174,7 @@ var Body = React.createClass({
                           <td> User Name </td>
                           <td>
                             <a href='#' key={this.state.refresh} className='xeditable' id='name' data-type='text' 
-                               data-placeholder='Required' data-name='user[name]'>{user.name}</a>
+                               data-placeholder='Required' data-name='user[name]'>{this.state.user.name}</a>
                           </td>
                         </tr>
                         <tr>

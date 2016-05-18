@@ -3,7 +3,8 @@ import {
   SidebarControls, SidebarControlBtn
 } from 'global/jsx/sidebar_component';
 
-import UserStore   from 'stores/user_store'
+import UserStore   from 'stores/user_store';
+import UserActions from 'actions/user_actions';
 import path_helper from 'path_helper';
 
 import { Link } from 'react-router';
@@ -58,16 +59,13 @@ class ApplicationSidebar extends React.Component {
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    let state = UserStore.getState();
-    state.name = user.name;
-    state.email = user.email;
-    state.gravatar = 'https://www.gravatar.com/avatar/' + md5(state.email);
-    this.state = state;
+    this.state = this.getState();
     this._onChange = this._onChange.bind(this);
   }
 
   componentDidMount() {
     UserStore.addChangeListener(this._onChange);
+    UserActions.get_user();
   }
 
   componentWillUnmount() {
@@ -75,7 +73,14 @@ export default class extends React.Component {
   }
 
   _onChange() {
-    this.setState(UserStore.getState());
+    this.setState(this.getState());
+  }
+
+  getState() {
+    return {
+      user: UserStore.getUser(),
+      status: UserStore.getStatus(),
+    };
   }
 
   render() {
@@ -85,10 +90,10 @@ export default class extends React.Component {
           <Grid>
             <Row className='fg-white'>
               <Col xs={4} collapseRight>
-                <img src={this.state.gravatar} width='40' height='40' />
+                <img src={this.state.user.gravatar} width='40' height='40' />
               </Col>
               <Col xs={8} collapseLeft id='avatar-col'>
-                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>{this.state.name}</div>
+                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>{this.state.user.name}</div>
                 <div>
                   <Progress id='demo-progress' value={30} min={0} max={100} color='#ffffff'/>
                   <Link to={path_helper('/lock')}><Icon id='demo-icon' bundle='fontello' glyph='lock-5' /></Link>

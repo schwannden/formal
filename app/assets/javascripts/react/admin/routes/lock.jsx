@@ -1,44 +1,66 @@
+import md5                     from 'md5';
 import {Link,State,Navigation} from 'react-router';
-import md5 from 'md5';
+import classNames              from 'classnames';
+import SidebarMixin            from 'global/jsx/sidebar_component';
 
-import classNames   from 'classnames';
-import SidebarMixin from 'global/jsx/sidebar_component';
+import UserStore   from 'stores/user_store';
+import UserActions from 'actions/user_actions';
 
 import Header  from 'common/header';
 import Sidebar from 'common/sidebar';
 import Footer  from 'common/footer';
 
 var Body = React.createClass({
+
   interval: null,
+
   getTimeState: function() {
     return {
       time: moment().format('hh:mm:ss'),
       date: moment().format('dddd, MMMM YYYY')
     }
   },
+
   getInitialState: function() {
     return {
       time: null,
-      date: null
+      date: null,
+      user: UserStore.getUser(),
     };
   },
+
   back: function(e) {
     e.preventDefault();
     e.stopPropagation();
     window.history.back();
   },
+
   componentWillUnmount: function() {
+    UserStore.removeChangeListener(this._onChange);
     clearInterval(this.interval);
     $('html').removeClass('authentication');
   },
+
   componentDidMount: function() {
+    UserStore.addChangeListener(this._onChange);
+    UserActions.get_user();
     $('html').addClass('authentication');
     this.interval = setInterval(function() {
       this.setState(this.getTimeState());
     }.bind(this), 500);
   },
+
+  _onChange: function() {
+    this.setState(this.getState())
+  },
+
+  getState: function() {
+    return {
+      user: UserStore.getUser(),
+    };
+  },
+
   render: function() {
-    user.gravatar = 'https://www.gravatar.com/avatar/' + md5(user.email);
     return (
       <Container id='auth-container' className='lockpage'>
         <Container id='auth-row'>
@@ -53,8 +75,8 @@ var Body = React.createClass({
               <Row style={{marginTop: 50}}>
                 <Col sm={12} className='text-center'>
                   <Form onSubmit={this.back}>
-                    <Label>{user.name}</Label>
-                    <img src={user.gravatar} width='128' height='128' alt='avatar' />
+                    <Label>{this.state.user.name}</Label>
+                    <img src={this.state.user.gravatar} width='128' height='128' alt='avatar' />
                     <Input type='password' placeholder='Password' autoFocus />
                     <Button type='submit' className='hidden'>Unlock</Button>
                   </Form>

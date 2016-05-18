@@ -2,6 +2,13 @@ import AppDispatcher from 'dispatcher';
 import ActionType from 'action_type';
 
 export default {
+  get_user(user) {
+    AppDispatcher.dispatch({
+      actionType: ActionType.GET_USER,
+      user: user,
+    })
+  },
+
   signup_successful() {
     AppDispatcher.dispatch({
       actionType: ActionType.SIGNUP_SUCCESSFUL,
