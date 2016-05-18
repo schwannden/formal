@@ -25,8 +25,17 @@ class Body extends React.Component {
       editable: false,
       eventLimit: true, // allow "more" link when too many events
       events: events.map(event => {
-        event.start = (new Date(0)).setUTCSeconds(event.start);
-        event.end   = (new Date(0)).setUTCSeconds(event.end);
+        if(event.dow != null) {
+          let time = new Date(0);
+          time.setUTCSeconds(event.start);
+          event.start = "" + time.getHours() + ":" + time.getMinutes();
+          time = new Date(0);
+          time.setUTCSeconds(event.end);
+          event.end = "" + time.getHours() + ":" + time.getMinutes();
+        } else {
+          event.start = (new Date(0)).setUTCSeconds(event.start);
+          event.end   = (new Date(0)).setUTCSeconds(event.end);
+        }
         return event;
       }),
       eventRender: function(event, element, view) {
