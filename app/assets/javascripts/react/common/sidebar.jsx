@@ -61,7 +61,7 @@ export default class extends React.Component {
     let state = UserStore.getState();
     state.name = user.name;
     state.email = user.email;
-    state.gravatar = 'http://www.gravatar.com/avatar/' + md5(state.email);
+    state.gravatar = 'https://www.gravatar.com/avatar/' + md5(state.email);
     this.state = state;
     this._onChange = this._onChange.bind(this);
   }

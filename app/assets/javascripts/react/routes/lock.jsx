@@ -38,7 +38,7 @@ var Body = React.createClass({
     }.bind(this), 500);
   },
   render: function() {
-    user.gravatar = 'http://www.gravatar.com/avatar/' + md5(user.email);
+    user.gravatar = 'https://www.gravatar.com/avatar/' + md5(user.email);
     return (
       <Container id='auth-container' className='lockpage'>
         <Container id='auth-row'>
