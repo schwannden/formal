@@ -25,10 +25,25 @@ class Body extends React.Component {
       editable: false,
       eventLimit: true, // allow "more" link when too many events
       events: events.map(event => {
-        event.start = (new Date(0)).setUTCSeconds(event.start);
-        event.end   = (new Date(0)).setUTCSeconds(event.end);
+        if(event.dow != null) {
+          let time = new Date(0);
+          time.setUTCSeconds(event.start);
+          event.start = "" + time.getUTCHours() + ":" + time.getUTCMinutes();
+          time = new Date(0);
+          time.setUTCSeconds(event.end);
+          event.end = "" + time.getUTCHours() + ":" + time.getUTCMinutes();
+        } else {
+          event.start = event.start * 1000;
+          event.end   = event.end * 1000;
+        }
         return event;
-      })});
+      }),
+      eventRender: function(event, element, view) {
+        $(element).tooltip({
+          title: event.title + "<br><br>" + event.description + "<br></br> 地點：" + event.location
+        });
+      }
+    });
   }
 
   render() {
