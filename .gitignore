@@ -22,7 +22,8 @@ app/assets/stylesheets/theme.css
 app/assets/stylesheets/main.css
 app/assets/stylesheets/font-faces.css
 app/assets/stylesheets/colors.css
-app/assets/javascripts/admin.js
+app/assets/javascripts/admin_react.js
+app/assets/javascripts/home_react.js
 
 .DS_Store
 node_modules
