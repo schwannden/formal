@@ -1,11 +1,11 @@
-import classNames from 'classnames';
-import SidebarMixin from 'global/jsx/sidebar_component';
-import { Link, State, Route }   from 'react-router';
+import classNames         from 'classnames';
+import SidebarMixin       from 'global/jsx/sidebar_component';
+import {Link,State,Route} from 'react-router';
 
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
 import ActionType   from 'action_type'
-import Preview      from 'routes/preview'
+import Preview      from 'components/preview'
 
 import Header  from 'common/header';
 import Sidebar from 'common/sidebar';

@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :comments, :foreign_key => "to_id"
 
   def as_json(option={})
-    super(methods: [:gravatar])
+    super(methods: [:gravatar], only: ["name", "email", "gravatar"])
   end
 
   def gravatar

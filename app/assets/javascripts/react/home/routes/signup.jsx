@@ -1,5 +1,5 @@
 import classNames   from 'classnames';
-import { Link }     from 'react-router';
+import {Link}       from 'react-router';
 import SidebarMixin from 'global/jsx/sidebar_component';
 
 import path_helper from 'path_helper';
@@ -14,6 +14,12 @@ import Footer  from 'common/footer';
 class Body extends React.Component {
 
   constructor(props) {
+    $.get('/current_user')
+      .success(data => {
+        if(data) { window.location = 'admin/forum' }
+      })
+      .error(error => console.log(error));
+
     super(props);
     this.state = UserStore.getState();
     this._onChange = this._onChange.bind(this);

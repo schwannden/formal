@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { Link }   from 'react-router';
+import {Link}     from 'react-router';
 
 import TweetActions from 'actions/tweet_actions';
-import Comment      from 'routes/comment';
+import Comment      from 'components/comment';
 
 export default class Tweet extends React.Component {
 

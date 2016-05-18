@@ -5,14 +5,12 @@ Rails.application.routes.draw do
     resources :likes
   end
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => "users/registrations" }
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  get 'current_user' => 'users#get_user'
 
-  # You can have the root of your site routed with "root"
-  root 'admin#index'
+  root 'home#index'
 
   match 'admin/*path' => 'admin#index', via: :get
-  get '/'       => 'admin#index'
-  get '/login'  => 'users#login'
-  get '/signup' => 'users#login'
+  get '/'       => 'home#index'
+  get '/login'  => 'home#index'
+  get '/signup' => 'home#index'
 end

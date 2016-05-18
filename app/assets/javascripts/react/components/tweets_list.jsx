@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
-import TweetBox from 'routes/tweet_box'
-import Tweet    from 'routes/tweet'
+import TweetBox from 'components/tweet_box'
+import Tweet    from 'components/tweet'
 
 export default class TweetsList extends React.Component {
   render () {

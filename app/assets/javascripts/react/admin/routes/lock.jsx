@@ -1,12 +1,12 @@
-import { Link, State, Navigation } from 'react-router';
+import {Link,State,Navigation} from 'react-router';
 import md5 from 'md5';
 
-import classNames from 'classnames';
+import classNames   from 'classnames';
 import SidebarMixin from 'global/jsx/sidebar_component';
 
-import Header from 'common/header';
+import Header  from 'common/header';
 import Sidebar from 'common/sidebar';
-import Footer from 'common/footer';
+import Footer  from 'common/footer';
 
 var Body = React.createClass({
   interval: null,

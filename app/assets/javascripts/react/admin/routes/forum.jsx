@@ -1,10 +1,10 @@
-import classNames from 'classnames';
+import classNames   from 'classnames';
 import SidebarMixin from 'global/jsx/sidebar_component';
 
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
 import ActionType   from 'action_type'
-import TweetsList   from 'routes/tweets_list'
+import TweetsList   from 'components/tweets_list'
 
 import Header  from 'common/header';
 import Sidebar from 'common/sidebar';

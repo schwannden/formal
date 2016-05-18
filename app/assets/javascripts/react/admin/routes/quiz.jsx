@@ -1,10 +1,10 @@
-import classNames from 'classnames';
-import { Link } from 'react-router';
+import classNames   from 'classnames';
+import {Link}       from 'react-router';
 import SidebarMixin from 'global/jsx/sidebar_component';
 
-import Header from 'common/header';
+import Header  from 'common/header';
 import Sidebar from 'common/sidebar';
-import Footer from 'common/footer';
+import Footer  from 'common/footer';
 
 import ReactStyle from 'global/jsx/react-styles/src/ReactStyle.jsx';
 

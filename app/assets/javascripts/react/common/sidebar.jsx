@@ -12,7 +12,7 @@ import md5 from 'md5';
 class ApplicationSidebar extends React.Component {
   handleSignout() {
     $.post('/users/sign_out', {_method: "delete"})
-      .success()
+      .success(()=> {window.location = "/"})
       .error(error => console.log(error));
   }
 
@@ -42,7 +42,7 @@ class ApplicationSidebar extends React.Component {
               <div className='sidebar-header'> Session </div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-fontello-logout' onClick={this.handleSignout} name='Logout' href="/" />
+                  <SidebarNavItem glyph='icon-fontello-logout' onClick={this.handleSignout} name='Logout' href="#" />
                   <SidebarNavItem glyph='icon-fontello-user-2' name='Profile' href={path_helper('/profile')} />
                   <SidebarNavItem glyph='icon-fontello-lock-filled' name='Lock Page' href={path_helper('/lock')} />
                 </SidebarNav>

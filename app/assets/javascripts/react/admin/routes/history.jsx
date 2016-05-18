@@ -1,22 +1,21 @@
 import classNames from 'classnames';
 import SidebarMixin from 'global/jsx/sidebar_component';
 
-import Header from 'common/header';
+import Header  from 'common/header';
 import Sidebar from 'common/sidebar';
-import Footer from 'common/footer';
+import Footer  from 'common/footer';
 
-import LoremIpsum from 'global/jsx/loremipsum';
-import dataObject from 'routes/dataObject.json';
+import dataObject from 'components/dataObject.json';
 
 class Body extends React.Component {
   componentDidMount() {
     createStoryJS({
-      type:       'timeline',
-      width:      '100%',
-      height:     '600',
-      id:         'my-timeline-story',
-      source:     dataObject,
-      embed_id:   'my-timeline'
+      type:     'timeline',
+      width:    '100%',
+      height:   '600',
+      id:       'my-timeline-story',
+      source:   dataObject,
+      embed_id: 'my-timeline'
     });
   }
   render() {

@@ -28,9 +28,7 @@
     <link rel='icon' type='image/png' href='/favicons/favicon-32x32.png' sizes='32x32'>
     <meta name='msapplication-TileColor' content='#E76049'>
     <meta name='msapplication-TileImage' content='/mstile-144x144.png'>
-    <meta name='application-name' content='Rubix'>
-    <link media='screen' rel='stylesheet' type='text/css' href='/css/vendor/pace/pace.css' />
-    <link media='screen' rel='stylesheet' type='text/css' href='/css/vendor/perfect-scrollbar/perfect-scrollbar.css'>
+    <meta name='formal' content='formal class system'>
     <link media='screen' rel='stylesheet' type='text/css' href='/css/vendor/morris/morris.css'>
     <style>
         .modal-backdrop.in {
@@ -44,6 +42,7 @@
     <%= stylesheet_link_tag :application %>
     <link media='screen' rel='stylesheet' type='text/css' href='/css/fonts/app/fonts.css'>
     <%= javascript_include_tag :application %>
+    <%= javascript_include_tag params[:controller] %>
     <%= csrf_meta_tags %>
     <%= yield :head %>
   </head>
@@ -57,8 +56,7 @@
       MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']]}});
     </script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type='text/javascript' src='/js/common/rubix/rubix.js'></script>
     <script type='text/javascript' src='/js/common/globals.js'></script>
-    <%= javascript_include_tag :admin %>
+    <%= javascript_include_tag params[:controller] + "_react" %>
   </body>
 </html>
