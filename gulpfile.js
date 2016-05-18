@@ -139,11 +139,19 @@ var webpackConfig = function(withHotLoader) {
   };
 };
 
-gulp.task('react:app', function() {
+gulp.task('react:admin', function() {
   var wconfig = webpackConfig();
-  return gulp.src(script_root + 'main.jsx')
+  return gulp.src(script_root + 'admin/main.jsx')
           .pipe(webpack(wconfig))
-          .pipe(rename(defaultAppName +'.js'))
+          .pipe(rename('admin_react.js'))
+          .pipe(gulp.dest(bundle_root));
+});
+
+gulp.task('react:home', function() {
+  var wconfig = webpackConfig();
+  return gulp.src(script_root + 'home/main.jsx')
+          .pipe(webpack(wconfig))
+          .pipe(rename('home_react.js'))
           .pipe(gulp.dest(bundle_root));
 });
 
@@ -205,11 +213,11 @@ gulp.task('build:css', ['sass']);
 gulp.task('build:dev', ['build:css']);
 
 gulp.task('default', function(callback) {
-  runSequence('react:app', 'build:css', 'base64-css', ['watch'], callback);
+  runSequence('react:admin', 'react:home', 'build:css', 'base64-css', ['watch'], callback);
 });
 
 gulp.task('development', function(callback) {
-  runSequence('react:app', callback);
+  runSequence('react:admin', 'react:home', callback);
 });
 
 /*BEGIN: ALIASES FOR CERTAIN TASKS (for Watch)*/

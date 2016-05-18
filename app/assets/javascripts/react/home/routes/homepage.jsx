@@ -1,6 +1,6 @@
-import { State, Navigation } from 'react-router';
-import classNames from 'classnames';
-import path_helper from 'path_helper';
+import {State,Navigation} from 'react-router';
+import classNames         from 'classnames';
+import path_helper        from 'path_helper';
 
 class Hero extends React.Component {
   render() {
@@ -41,10 +41,11 @@ class HeroHeader2 extends React.Component {
 }
 
 export default React.createClass({
+  mixins: [State, Navigation],
   handleLogin() {
     $('body').addClass('fade-out');
     setTimeout(() => {
-      window.location = '/login';
+      this.transitionTo('/login');
     }, 250);
   },
   render() {

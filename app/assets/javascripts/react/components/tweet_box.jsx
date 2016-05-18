@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import TweetActions from 'actions/tweet_actions'
 import TweetStore   from 'stores/tweet_store'
 import ActionType   from 'action_type'
-import Preview      from 'routes/preview'
+import Preview      from 'components/preview'
 
 export default class TweetBox extends React.Component {
 

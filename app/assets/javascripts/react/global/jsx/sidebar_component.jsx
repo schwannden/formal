@@ -143,11 +143,6 @@ export var Sidebar = React.createClass({
       }
     });
   },
-  updateScrollbar() {
-    if(!Modernizr.touch) {
-      $(React.findDOMNode(this.refs.sidebar)).perfectScrollbar('update');
-    }
-  },
   repositionScrollbar(child_node, top, height) {
     clearTimeout(timer);
     var node = $(React.findDOMNode(this.refs.sidebar));
@@ -161,28 +156,13 @@ export var Sidebar = React.createClass({
         }
       }
     }
-    if(!Modernizr.touch) {
-      this.updateScrollbar();
-    }
-  },
-  destroyScrollbar() {
-    $(React.findDOMNode(this.refs.sidebar)).perfectScrollbar('destroy');
-  },
-  initializeScrollbar() {
-    $(React.findDOMNode(this.refs.sidebar)).perfectScrollbar({
-      suppressScrollX: true
-    });
   },
   componentWillMount() {
-    ReactBootstrap.Dispatcher.on('sidebar:reinitialize', this.initializeScrollbar);
-    ReactBootstrap.Dispatcher.on('sidebar:destroy', this.destroyScrollbar);
-    ReactBootstrap.Dispatcher.on('sidebar:update', this.updateScrollbar);
     ReactBootstrap.Dispatcher.on('sidebar:reposition', this.repositionScrollbar);
     ReactBootstrap.Dispatcher.on('sidebar:keychange', this.handleKeyChange);
   },
   componentDidMount() {
     if(!Modernizr.touch) {
-      this.initializeScrollbar();
     }
 
     if(this.props.active) {
@@ -193,9 +173,6 @@ export var Sidebar = React.createClass({
     }
   },
   componentWillUnmount() {
-    ReactBootstrap.Dispatcher.off('sidebar:reinitialize', this.initializeScrollbar);
-    ReactBootstrap.Dispatcher.off('sidebar:destroy', this.destroyScrollbar);
-    ReactBootstrap.Dispatcher.off('sidebar:update', this.updateScrollbar);
     ReactBootstrap.Dispatcher.off('sidebar:reposition', this.repositionScrollbar);
     ReactBootstrap.Dispatcher.off('sidebar:keychange', this.handleKeyChange);
   },

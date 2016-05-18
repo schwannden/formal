@@ -13,4 +13,5 @@ export default {
   COMMENT_EDIT:      12,
   COMMENT_UPDATE:    13,
   COMMENT_DESTROY:   14,
+  GET_USER:          15,
 };

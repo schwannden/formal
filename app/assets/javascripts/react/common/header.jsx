@@ -123,7 +123,7 @@ var HeaderNavigation = React.createClass({
   handleLogout(e) {
     $('body').addClass('fade-out');
     setTimeout(() => {
-      this.transitionTo('/');
+      window.location = "/"
     }, 250);
   },
   componentDidMount() {
