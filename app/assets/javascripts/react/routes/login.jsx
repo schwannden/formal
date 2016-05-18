@@ -25,6 +25,7 @@ class Body extends React.Component {
       user: {
         email: this.refs.email.value,
         password: this.refs.password.value,
+        remember_me: this.refs.remember_me.checked? 1 : 0,
       }
     };
     UserActions.signin(form_data);
@@ -104,6 +105,12 @@ class Body extends React.Component {
                               </InputGroupAddon>
                               <Input type='password' ref='password' id='password'
                                 className='border-focus-blue' placeholder='password' />
+                            </InputGroup>
+                          </FormGroup>
+                          <FormGroup>
+                            <InputGroup lg>
+                              <Input type='checkbox' ref='remember_me' className='border-focus-blue' />
+                              Remember Me
                             </InputGroup>
                           </FormGroup>
                           <FormGroup>
