@@ -3,6 +3,7 @@
 //= require bower_components/moment/moment
 //= require bower_components/eventemitter2/lib/eventemitter2
 //= require bower_components/vex/js/vex.combined.min
+////= require bower_components/react/react-with-addons
 //= require bootstrap/bootstrap.js
 //= require bootstrap-datetimepicker/bootstrap-datetimepicker
 //= require d3/d3.js
