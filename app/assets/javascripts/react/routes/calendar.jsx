@@ -28,13 +28,13 @@ class Body extends React.Component {
         if(event.dow != null) {
           let time = new Date(0);
           time.setUTCSeconds(event.start);
-          event.start = "" + time.getHours() + ":" + time.getMinutes();
+          event.start = "" + time.getUTCHours() + ":" + time.getUTCMinutes();
           time = new Date(0);
           time.setUTCSeconds(event.end);
-          event.end = "" + time.getHours() + ":" + time.getMinutes();
+          event.end = "" + time.getUTCHours() + ":" + time.getUTCMinutes();
         } else {
-          event.start = (new Date(0)).setUTCSeconds(event.start);
-          event.end   = (new Date(0)).setUTCSeconds(event.end);
+          event.start = event.start * 1000;
+          event.end   = event.end * 1000;
         }
         return event;
       }),
