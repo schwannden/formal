@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
   def signin_required?
     if current_user
       redirect_to '/admin/quiz'
+    else
+      true
     end
   end
 end

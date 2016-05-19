@@ -21,8 +21,14 @@ class Body extends React.Component {
       .error(error => console.log(error));
 
     super(props);
-    this.state = UserStore.getState();
+    this.state = this.getState();
     this._onChange = this._onChange.bind(this);
+  }
+
+  getState() {
+    return {
+      status: UserStore.getStatus()
+    };
   }
 
   handleSubmit (e) {
@@ -49,15 +55,17 @@ class Body extends React.Component {
   }
 
   _onChange() {
-    switch(this.state.status) {
-      case ActionType.SIGNUP_SUCCESSFUL:
-          window.location = path_helper('/quiz');
-        break;
-      case ActionType.SIGNUP_ERROR:
-          this.errorNotification();
-        break;
-      default:
-    }
+    this.setState(this.getState, () => {
+      switch(this.state.status) {
+        case ActionType.SIGNUP_SUCCESSFUL:
+            window.location = path_helper('/quiz');
+          break;
+        case ActionType.SIGNUP_ERROR:
+            this.errorNotification();
+          break;
+        default:
+      }
+    });
   }
 
   errorNotification() {
