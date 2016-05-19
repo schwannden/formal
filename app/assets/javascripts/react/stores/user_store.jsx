@@ -46,7 +46,7 @@ class UserEventEmitter extends AppEventEmiter {
 let UserStore = new UserEventEmitter;
 
 AppDispatcher.register(action => {
-  _user.status = action.action_type;
+  _user.status = action.actionType;
   switch(action.actionType) {
     case ActionType.GET_USER:
       _user.email    = action.user.email
