@@ -297,3 +297,12 @@
     height: 100% !important;
   }
 }
+
+.tweet-message {
+  max-height: 800px;
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

@@ -59,7 +59,7 @@ export default class Tweet extends React.Component {
     let comments = this.props.comments.map(comment => <Comment {...comment}/> );
     return (
         <PanelContainer>
-          <PanelBody style={{padding: 25, paddingTop: 12.5}}>
+          <PanelBody className="tweet-message" style={{padding: 25, paddingTop: 12.5}}>
             <div className='inbox-avatar'>
               <img src={this.props.gravatar} width='40' height='40' />
               <div className='inbox-avatar-name'>
