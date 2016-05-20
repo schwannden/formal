@@ -140,19 +140,18 @@ class Body extends React.Component {
       var grad = chart.bar_series({ name: '研究所', color: '#3E5F90' });
 
       let n = college_data1.length;
+      let col_percent = [], grad_percent = [];
       for(let i = 0 ; i < n ; i++) {
         let t1 = college_data1[i].y;
         let t2 = grad_data1[i].y * 82/46;
-        if (t1 + t2 == 0) {
-          college_data1[i].y = 50;
-          grad_data1[i].y    = 50;
-        } else {
-          college_data1[i].y = t1*100/(t1+t2);
-          grad_data1[i].y    = t2*100/(t1+t2);
-        }
+        let y1 = (t1+t2==0)? 0 : t1*100/(t1+t2);
+        let y2 = (t1+t2==0)? 0 : t2*100/(t1+t2);
+        let label = college_data1[i].x;
+        col_percent.push({x: label, y: y1});
+        grad_percent.push({x: label, y: y2});
       }
-      college.addData(college_data1);
-      grad.addData(grad_data1);
+      college.addData(col_percent);
+      grad.addData(grad_percent);
     })();
 
     (() => {
@@ -162,20 +161,19 @@ class Body extends React.Component {
       var college = chart.bar_series({ name: '大學部', color: '#E69E8F', marker: 'diamond' });
       var grad = chart.bar_series({ name: '研究所', color: '#3E5F90' });
 
-      let n = college_data1.length;
+      let n = college_data2.length;
+      let col_percent = [], grad_percent = [];
       for(let i = 0 ; i < n ; i++) {
         let t1 = college_data2[i].y;
         let t2 = grad_data2[i].y * 82/46;
-        if (t1 + t2 == 0) {
-          college_data2[i].y = 50;
-          grad_data2[i].y    = 50;
-        } else {
-          college_data2[i].y = t1*100/(t1+t2);
-          grad_data2[i].y    = t2*100/(t1+t2);
-        }
+        let y1 = (t1+t2==0)? 0 : t1*100/(t1+t2);
+        let y2 = (t1+t2==0)? 0 : t2*100/(t1+t2);
+        let label = college_data2[i].x;
+        col_percent.push({x: label, y: y1});
+        grad_percent.push({x: label, y: y2});
       }
-      college.addData(college_data2);
-      grad.addData(grad_data2);
+      college.addData(col_percent);
+      grad.addData(grad_percent);
     })();
   }
   render() {
